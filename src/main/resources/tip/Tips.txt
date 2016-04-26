@@ -1,0 +1,135 @@
+#form goujy--2016-03-03
+
+1.教程来源:
+http://www.runoob.com/mongodb/mongodb-tutorial.html
+
+
+1,Mongo 区分，服务端 和客户端
+
+2,默认不需要密码
+
+
+3,服务器启动&&客户端连接
+服务器启动:C:\Program Files\MongoDB\Server\3.2\bin\mongod.exe
+
+客户端(CMD)连接:C:\Program Files\MongoDB\Server\3.2\bin\mongo goujy:27017  默认连接到test[内置实例]上
+客户端 Mongo Management Studio 连接;
+
+
+4,常用命令
+show dbs 命令可以显示所有数据的列表。
+db 执行 "db" 命令可以显示当前数据库对象或集合。
+use test 运行"use"命令，可以连接到一个指定的数据库。
+show collections 查询所有集合
+
+---------Collection 基本信息------------------------------------------
+db.col.count();  	查询当前集合下的数据总条数;
+db.col.dataSize();	当前集合的数据大小
+db.col.totalSize(); 当前集合总大小
+db.col.getDB();	  	查询当前集合所在的数据库;
+db.col.renameCollection('firstColl'); 重命名
+db.col.drop() 		删除当前集合
+---------Collection 的查询操作R-----------------------------------------	
+db.col.find();  							类似select* from col;  	某一集合下的所有数据;
+db.col.distinct('name');	 				类似select distinct name from col  过滤掉重复的数据
+db.col.find({'age':22,'name':'jy'});		类似select * from col where age=22 and name='jy' 查询指定条件
+db.col.find({age:{$gt:22}});				类似select * from col where age>22  查询指定条件[gt 是 '>']
+db.col.find({age:{$lt:22}});				类似select * from col where age<22  查询指定条件[lt 是 '<']
+db.col.find({age:{$gte:22}});				类似select * from col where age>22  查询指定条件[gte 是 '>=']
+db.col.find({age:{$lte:22}});				类似select * from col where age<22  查询指定条件[lte 是 '<=']
+db.col.find({name:/mong/});					类似select * from col where name like '%mong%';包含mong的name
+db.col.find({name:/^mong/});				类似select * from col where name like 'mong%'; 以mong开头的name;
+db.col.find({},{name:1,age1});				类似select name,age from col; 查询指定列;
+db.col.find().sort(age,1); 					按照年龄正序；
+db.col.find().sort(age,-1); 				按照年龄倒序；
+db.col.find().limit(5);						查询前五条
+db.col.find().skip(10);						查询10条之后的;
+db.col.find().limit(10).skip(5);			查询5-10条之间的; 用于分页;
+db.col.find({$or:[{age:22,age:33}]})		类似select*from col where age=22 or age = 33;
+db.col.find().count();						类似select count(*) from col 查询结果集的总条数,可以加where;
+db.col.find({sex:{$exists:true}}).count();  类似select count(sex) from col ;
+
+-------索引信息;----------------------------------------------------------------------------------------
+
+1、	创建索引 
+db.userInfo.ensureIndex({name: 1}); 
+db.userInfo.ensureIndex({name: 1, ts: -1}); 
+
+2、	查询当前聚集集合所有索引 
+db.userInfo.getIndexes(); 
+
+3、	查看总索引记录大小 
+db.userInfo.totalIndexSize(); 
+
+4、	读取当前集合的所有index信息 
+db.users.reIndex(); 
+
+5、	删除指定索引 
+db.users.dropIndex("name_1"); 
+
+6、	删除所有索引索引 
+db.users.dropIndexes(); 
+
+--------Collection修改、添加、删除集合数据[CUD]-------------------------------------------------------------------------------
+db.users.save({name: ‘zhangsan’, age: 25, sex: true});   加的数据的数据列，没有固定，根据添加的数据为准 
+db.users.update({age: 25}, {$set: {name: 'changeName'}}, false, true); 		类似update users set name = 'changeName' where age = 25; 
+db.users.update({name: 'Lisi'}, {$inc: {age: 50}}, false, true); 			类似update users set age = age + 50 where name = 'Lisi'; 
+db.users.update({name: 'Lisi'}, {$inc: {age: 50}, $set: {name: 'hoho'}}, false, true);  类似update users set age = age + 50, name = ‘hoho’ where name = ‘Lisi’; 
+db.users.remove({age: 132}); 		删除操作;
+
+----------------------------------------------------------------------------------------------------------------
+
+语句块操作 
+1、	简单Hello World 
+print("Hello World!"); 
+这种写法调用了print函数，和直接写入"Hello World!"的效果是一样的； 
+
+2、	将一个对象转换成json 
+tojson(new Object()); 
+tojson(new Object('a')); 
+
+3、	循环添加数据 
+> for (var i = 0; i < 30; i++) { 
+... db.users.save({name: "u_" + i, age: 22 + i, sex: i % 2}); 
+... }; 
+这样就循环添加了30条数据，同样也可以省略括号的写法 
+> for (var i = 0; i < 30; i++) db.users.save({name: "u_" + i, age: 22 + i, sex: i % 2}); 
+也是可以的，当你用db.users.find()查询的时候，显示多条数据而无法一页显示的情况下，可以用it查看下一页的信息； 
+
+4、	find 游标查询 
+>var cursor = db.users.find(); 
+> while (cursor.hasNext()) { 
+    printjson(cursor.next()); 
+} 
+这样就查询所有的users信息，同样可以这样写 
+var cursor = db.users.find(); 
+while (cursor.hasNext()) { printjson(cursor.next); } 
+同样可以省略{}号 
+
+5、	forEach迭代循环 
+db.users.find().forEach(printjson); 
+forEach中必须传递一个函数来处理每条迭代的数据信息 
+
+6、	将find游标当数组处理 
+var cursor = db.users.find(); 
+cursor[4]; 
+取得下标索引为4的那条数据 
+既然可以当做数组处理，那么就可以获得它的长度：cursor.length();或者cursor.count(); 
+那样我们也可以用循环显示数据 
+for (var i = 0, len = c.length(); i < len; i++) printjson(c[i]); 
+
+7、	将find游标转换成数组 
+> var arr = db.users.find().toArray(); 
+> printjson(arr[2]); 
+用toArray方法将其转换为数组 
+
+8、	定制我们自己的查询结果 
+只显示age <= 28的并且只显示age这列数据 
+db.users.find({age: {$lte: 28}}, {age: 1}).forEach(printjson); 
+db.users.find({age: {$lte: 28}}, {age: true}).forEach(printjson); 
+排除age的列 
+db.users.find({age: {$lte: 28}}, {age: false}).forEach(printjson); 
+
+9、	forEach传递函数显示信息 
+db.things.find({x:4}).forEach(function(x) {print(tojson(x));}); 
+上面介绍过forEach需要传递一个函数，函数会接受一个参数，就是当前循环的对象，然后在函数体重处理传入的参数信息。 

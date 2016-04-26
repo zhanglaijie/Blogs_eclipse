@@ -1,0 +1,27 @@
+.login h1 {
+    background-color: #1e8cbe;
+    border-bottom: 1px solid #0079aa;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 46px;
+    text-align: left;
+    margin: 0px;
+}
+
+.login h1 a{
+	color: #ffffff;
+    height: auto;
+    width: auto;
+    background: none;
+    font-weight: 300;
+    font-size: 18px;
+    margin: 0;
+    overflow: auto;
+    text-indent: 0;
+    display: inline-block;
+    line-height: 46px;
+    padding: 0 12px;
+    letter-spacing: -0.5px;
+}

@@ -1,0 +1,11 @@
+1.去官网（https://www.mongodb.org/dr/fastdl.mongodb.org/win32/mongodb-win32-x86_64-3.2.3-signed.msi/download）
+下载mongodb（mongodb-win32-x86_64-2008plus-ssl-3.2.1-signed.msi）
+
+2.点击安装包 完成安装 安装过程中可选择customer模式进性自定义安装目录 默认为 C:\Program Files\MongoDB\Server\3.2\bin
+
+3.启动
+	1)在任意盘建立数据库存放路径 例如D:\mongodb\db
+	2)启动cmd窗口 切换到安装目录的bin文件夹下   cd D:\Program Files\MongoDB\Server\3.2\bin
+	3)在安装目录的bin文件夹下输入 mongod --dbpath=D:\mongodb\db (dbpath为我们数据库存放路径)
+	4)如果想作为服务自启 用管理员权限 打开 cmd 指定logpath --install 然后启动 ok
+1.数据库应该先建立,表不用
