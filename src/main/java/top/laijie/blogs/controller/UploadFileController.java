@@ -1,5 +1,6 @@
 package top.laijie.blogs.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -92,7 +93,7 @@ public class UploadFileController {
                     //获取item中的上传文件的输入流
                     InputStream in = item.getInputStream();
                     //创建一个文件输出流
-                    FileOutputStream out = new FileOutputStream(filePath + "\\" + filename);
+                    FileOutputStream out = new FileOutputStream(filePath + File.separator + filename);
                     //创建一个缓冲区
                     byte buffer[] = new byte[1024];
                     //判断输入流中的数据是否已经读完的标识
