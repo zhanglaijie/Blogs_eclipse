@@ -22,6 +22,8 @@
         <security:intercept-url pattern="/postsController/createPost.do" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/postsController/createPostNavigation.do" access="hasRole('ROLE_USER')"/>
         
+        <!-- 个人中心 -->
+        <security:intercept-url pattern="/userController/about_me.do" access="hasRole('ROLE_USER')"/>
         <security:form-login  
                 login-page="/userController/login.do"   
                 authentication-failure-url="/userController/login.do?error=true"   

@@ -31,7 +31,7 @@ public class IndexPageController {
 	 private PostsServiceImpl postService;   
 	 @RequestMapping(value="/{name}", method = {RequestMethod.GET})
 	public String getDetail(@PathVariable("name") String name,ModelMap map){
-	    logger.info(name);
+	   // logger.info(name);
 	    Query query = new Query();  
         query.addCriteria(Criteria.where("blogaddress").is(name));  
 	    User user = userService.findOne(query);

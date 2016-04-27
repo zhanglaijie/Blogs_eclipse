@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.bson.json.JsonWriter;
 import org.springframework.beans.factory.annotation.Autowired;  
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import top.laijie.blogs.domain.User;
 import top.laijie.blogs.service.impl.UserServiceImpl;
 import top.laijie.blogs.tool.Page;
+import top.laijie.blogs.tool.StaticProperties;
 import top.laijie.blogs.tool.UserUtils;
 
 @Controller  
@@ -148,6 +150,9 @@ public class UserController {
     public String about_me(ModelMap map){
     	String email = UserUtils.getCurrentLoginName();
     	User user = userService.getUserByEmail(email);
+    	if(StringUtils.isBlank(user.getAlbum())){
+    		user.setAlbum(StaticProperties.DEFAULT_ALBUM);
+    	}
     	map.addAttribute("user",user);
 		return "/back/about_me.jsp";
     }

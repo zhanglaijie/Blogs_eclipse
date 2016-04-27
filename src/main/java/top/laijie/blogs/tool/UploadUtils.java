@@ -108,6 +108,25 @@ public class UploadUtils {
 	}
 	
 	/**
+	 * 磁盘相对目录
+	 * @param pid
+	 * @return
+	 */
+	public static String genPath(String parentDir){
+		StringBuilder pidSb = new StringBuilder(13);
+		Date date=new Date(); 
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMM"+File.separator+"dd"+File.separator);
+		String dateStr= sdf.format(date);
+		//
+		StringBuilder sb=new StringBuilder(30);
+		sb.append(File.separator);
+		sb.append(parentDir);
+		sb.append(File.separator);
+		sb.append(dateStr);
+		sb.append(pidSb.toString());
+		return sb.toString();
+	}
+	/**
 	 * 头像磁盘相对目录
 	 * @param pid
 	 * @return
