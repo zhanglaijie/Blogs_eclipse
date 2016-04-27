@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import top.laijie.blogs.domain.User;
 import top.laijie.blogs.service.impl.UserServiceImpl;
+import top.laijie.blogs.tool.PropUtils;
+import top.laijie.blogs.tool.UploadUtils;
 import top.laijie.blogs.tool.UserUtils;
+import top.laijie.blogs.tool.constant.Configuration;
 
 @Controller  
 @RequestMapping("/uploadFileController") 
@@ -43,14 +47,15 @@ public class UploadFileController {
     	 String loginName = UserUtils.getCurrentLoginName();
      	logger.info(loginName);
      	User user = userService.getUserByEmail(loginName);
-     	
-    	 	String savePath = this.getClass().getClassLoader().getResource("/").getPath();
-    	// String savePath = request.getSession().getServletContext().getContextPath();
-    	 //得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
-            File file = new File(savePath);
+     	String tempPath = UploadUtils.genTempPath(user.get_id().toString(),Configuration.STATIC_TEMP_FILE+(StringUtils.isBlank(user.getBlogaddress())?"":File.separator+user.getBlogaddress()));
+		String filePath = PropUtils.readPropertiesFile("upload.properties","uploadurl");
+		if(!(filePath.endsWith("/") || filePath.endsWith("\\")) ){
+			filePath += "/";
+		}
+            File file = new File(filePath);
             //判断上传文件的保存目录是否存在
             if (!file.exists() && !file.isDirectory()) {
-                System.out.println(savePath+"目录不存在，需要创建");
+                System.out.println(filePath+"目录不存在，需要创建");
                 //创建目录
                 file.mkdir();
             }
@@ -93,7 +98,7 @@ public class UploadFileController {
                         //获取item中的上传文件的输入流
                         InputStream in = item.getInputStream();
                         //创建一个文件输出流
-                        FileOutputStream out = new FileOutputStream(savePath + "\\" + filename);
+                        FileOutputStream out = new FileOutputStream(filePath + "\\" + filename);
                         //创建一个缓冲区
                         byte buffer[] = new byte[1024];
                         //判断输入流中的数据是否已经读完的标识

@@ -60,5 +60,5 @@
     </bean>    
     <!-- Web服务器的defaultServlet来处理静态文件 -->  
     <mvc:default-servlet-handler/> 
-    <mvc:resources mapping="/logo/**" location="/WEB-INF/classes/" />
+    <mvc:resources mapping="/logo/**" location="/target/classes/" />
 </beans>

@@ -16,11 +16,13 @@ import top.laijie.blogs.service.UserService;
 import top.laijie.blogs.tool.BasicService;
 import top.laijie.blogs.tool.Des3;
 import top.laijie.blogs.tool.MD5Util;
+import top.laijie.blogs.tool.PropUtils;
 import top.laijie.blogs.tool.ServiceException;
   
 	@Service   
 	public class UserServiceImpl extends BasicService<User> implements UserService  {     
 		private static Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
+		private static String DOMIAN = PropUtils.readPropertiesFile("mail.properties","domain");
 		/** 
 	     *  
 	     * @param name 
@@ -77,6 +79,7 @@ import top.laijie.blogs.tool.ServiceException;
 	     * 处理注册 
 	     */  
 	    public void processregister(User user){  
+	    	
 	        user.setRegisterTime(new Date());  
 	        user.setStatus(0);  
 	        ///如果处于安全，可以将激活码处理的更复杂点，这里我稍做简单处理  
@@ -86,11 +89,11 @@ import top.laijie.blogs.tool.ServiceException;
 	        this.save(user);
 	        ///邮件的内容  
 	        StringBuffer sb=new StringBuffer("点击下面链接激活账号，48小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");  
-	        sb.append("<a href=\"http://localhost:8080/Blogs/user/register?action=activate&email=");  
+	        sb.append("<a href=\"http://"+DOMIAN+"/user/register?action=activate&email=");  
 	        sb.append(user.getEmail());   
 	        sb.append("&validateCode=");   
 	        sb.append(user.getValidateCode());  
-	        sb.append("\">http://localhost:8080/Blogs/user/register?action=activate&email=");   
+	        sb.append("\">http://"+DOMIAN+"/user/register?action=activate&email=");   
 	        sb.append(user.getEmail());  
 	        sb.append("&validateCode=");  
 	        sb.append(user.getValidateCode());  
@@ -111,11 +114,11 @@ import top.laijie.blogs.tool.ServiceException;
 	        this.save(user); */
 	        ///邮件的内容  
 	        StringBuffer sb=new StringBuffer("点击下面链接找回账号</br>");  
-	        sb.append("<a href=\"http://localhost:8080/Blogs/user/findPasswdByEmail.do?action=activate&email=");  
+	        sb.append("<a href=\"http://"+DOMIAN+"/user/findPasswdByEmail.do?action=activate&email=");  
 	        sb.append(user.getEmail());   
 	        sb.append("&validateCode=");   
 	        sb.append(user.getValidateCode());  
-	        sb.append("\">http://localhost:8080/Blogs/user/findPasswdByEmail.do?action=activate&email=");   
+	        sb.append("\">http://"+DOMIAN+"/user/findPasswdByEmail.do?action=activate&email=");   
 	        sb.append(user.getEmail());  
 	        sb.append("&validateCode=");  
 	        sb.append(user.getValidateCode());  

@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import top.laijie.blogs.controller.IndexPageController;
 
-public class propUtils {
+public class PropUtils {
 	private static Logger logger = Logger.getLogger(IndexPageController.class.getName());
 	//读取properties文件
 	 public static String readPropertiesFile(String filename,String attr)  
@@ -20,7 +20,7 @@ public class propUtils {
 	        Properties properties = new Properties();  
 	        try  
 	        {  
-	            InputStream inputStream = propUtils.class.getClassLoader().getResourceAsStream(filename);
+	            InputStream inputStream = PropUtils.class.getClassLoader().getResourceAsStream(filename);
 
 	            properties.load(inputStream);  
 	            inputStream.close(); //关闭流  
@@ -35,7 +35,7 @@ public class propUtils {
 	 
 	 public static void writePropertiesFile(String filePath, String key, String value) {  
 	        //获取绝对路径  
-	        filePath = propUtils.class.getResource("/" + filePath).toString();  
+	        filePath = PropUtils.class.getResource("/" + filePath).toString();  
 	        //截掉路径的”file:/“前缀  
 	        filePath = filePath.substring(6);  
 	        Properties prop = new Properties();  
