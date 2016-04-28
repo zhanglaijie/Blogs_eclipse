@@ -14,7 +14,7 @@ import top.laijie.blogs.tool.Basic;
 @Document
 public class User extends Basic implements Serializable{  
     private static final long serialVersionUID = 1L;   
-    private String uid;  
+    //private String uid;  
     private String username;  
     private String password;
     private String nicename;
@@ -57,12 +57,12 @@ public class User extends Basic implements Serializable{
 	public void setAlbum(String album) {
 		this.album = album;
 	}
-	public String getUid() {
+	/*public String getUid() {
 		return uid;
 	}
 	public void setUid(String uid) {
 		this.uid = uid;
-	}
+	}*/
 	public String getUsername() {
 		return username;
 	}
@@ -141,7 +141,7 @@ public class User extends Basic implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "User [uid=" + uid + ", username=" + username + ", password="
+		return "User [username=" + username + ", password="
 				+ password + ", nicename=" + nicename + ", email=" + email
 				+ ", status=" + status + ", validateCode=" + validateCode
 				+ ", registerTime=" + registerTime + ", blogname=" + blogname

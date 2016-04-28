@@ -154,14 +154,14 @@ public class UserController {
     		user.setAlbum(StaticProperties.DEFAULT_ALBUM);
     	}
     	map.addAttribute("user",user);
-		return "/back/about_me.jsp";
+		return "/back/user/B_main.jsp";
     }
     /**
      * 完善资料
      * @return 
      */
     @RequestMapping("/prefect_info.do")
-    public String prefect_info(HttpServletRequest request){
+    public String prefect_info(HttpServletRequest request,ModelMap map){
     	String email = request.getParameter("email");
     	String nicename = request.getParameter("nicename");
     	String username = request.getParameter("username");
@@ -171,6 +171,7 @@ public class UserController {
     	user.setNicename(nicename);
     	user.setBlogsubname(blogsubname);
     	userService.save(user);
+    	
     	return "/login.jsp";
     }
     
@@ -188,8 +189,7 @@ public class UserController {
     	user2.setBlogsubname(user.getBlogsubname());
     	user2.setDescription(user.getDescription());
     	userService.save(user2);
-    			
-    	//userService.save(user);
+
     	return "redirect:/userController/about_me.do";
     }
 }  

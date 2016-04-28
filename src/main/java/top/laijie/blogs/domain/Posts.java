@@ -3,6 +3,8 @@ package top.laijie.blogs.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.bson.types.ObjectId;
+
 import top.laijie.blogs.tool.Basic;
 
 public class Posts extends Basic implements Serializable{
@@ -12,6 +14,7 @@ public class Posts extends Basic implements Serializable{
 	private static final long serialVersionUID = 1415437642114087749L;
 	private String title;
 	private String content;
+	private ObjectId uid;
 	/**
 	 * 摘录
 	 */
@@ -95,25 +98,30 @@ public class Posts extends Basic implements Serializable{
 	public void setRead_count(int read_count) {
 		this.read_count = read_count;
 	}
+	
+	public ObjectId getUid() {
+		return uid;
+	}
+	public void setUid(ObjectId uid) {
+		this.uid = uid;
+	}
 	public Posts() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public String toString() {
-		return "Posts [title=" + title + ", content=" + content + ", excerpt="
-				+ excerpt + ", status=" + status + ", type=" + type
-				+ ", author=" + author + ", postdate=" + postdate
-				+ ", modifieddate=" + modifieddate + ", tags=" + tags
-				+ ", comment_count=" + comment_count + ", read_count="
-				+ read_count + "]";
+		return "Posts [title=" + title + ", content=" + content + ", uid=" + uid + ", excerpt=" + excerpt + ", status="
+				+ status + ", type=" + type + ", author=" + author + ", postdate=" + postdate + ", modifieddate="
+				+ modifieddate + ", tags=" + tags + ", comment_count=" + comment_count + ", read_count=" + read_count
+				+ "]";
 	}
-	public Posts(String title, String content, String excerpt, int status,
-			String type, String author, Date postdate, Date modifieddate,
-			String tags, int comment_count, int read_count) {
+	public Posts(String title, String content, ObjectId uid, String excerpt, int status, String type, String author,
+			Date postdate, Date modifieddate, String tags, int comment_count, int read_count) {
 		super();
 		this.title = title;
 		this.content = content;
+		this.uid = uid;
 		this.excerpt = excerpt;
 		this.status = status;
 		this.type = type;
@@ -124,5 +132,6 @@ public class Posts extends Basic implements Serializable{
 		this.comment_count = comment_count;
 		this.read_count = read_count;
 	}
+	
 }
 	
