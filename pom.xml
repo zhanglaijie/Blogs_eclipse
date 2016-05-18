@@ -257,45 +257,14 @@
 	          <target>1.8</target>
 	        </configuration>
 	      </plugin>
-	      <!-- mvn jetty:run 
-	      		http://www.blogjava.net/fancydeepin/archive/2015/06/23/maven-jetty-plugin.html
-	      -->
-	       <plugin>
-		      <groupId>org.eclipse.jetty</groupId>
-		      <artifactId>jetty-maven-plugin</artifactId>
-		       <version>${jetty.version}</version>
-		      <configuration>
-		        <httpConnector>
-		          <port>80</port>
-		        </httpConnector>
-		        <stopKey>shutdown</stopKey>
-		        <stopPort>9966</stopPort>
-		        <!--
-		        <scanIntervalSeconds>2</scanIntervalSeconds>
-		        -->
-		        <reload>manual</reload>
-		        <dumpOnStart>true</dumpOnStart>
-		        <webApp>
-		          <contextPath>/</contextPath>
-		          <!--
-		          <resourceBases>
-		            <resourceBase>${project.basedir}/src/main/webapp</resourceBase>
-		            <resourceBase>${project.basedir}/commons</resourceBase>
-		          </resourceBases>
-		          -->
-		        </webApp>
-		        <requestLog implementation="org.eclipse.jetty.server.NCSARequestLog">
-		          <filename>target/access-yyyy_mm_dd.log</filename>
-		          <filenameDateFormat>yyyy_MM_dd</filenameDateFormat>
-		          <logDateFormat>yyyy-MM-dd HH:mm:ss</logDateFormat>
-		          <logTimeZone>GMT+8:00</logTimeZone>
-		          <append>true</append>
-		          <logServer>true</logServer>
-		          <retainDays>120</retainDays>
-		          <logCookies>true</logCookies>
-		        </requestLog>
-		      </configuration>
-		    </plugin>
+	     <plugin>   
+	      <groupId>org.apache.maven.plugins</groupId>   
+	      <artifactId>maven-war-plugin</artifactId>   
+	      <version>2.0.2</version>   
+	      <!-- <configuration>   
+	         <warSourceExcludes>WEB-INF/lib/log4j-${log4j.version}.jar</warSourceExcludes>   
+	      </configuration>   --> 
+	   </plugin>  
   	</plugins>
   </build>
 </project>
