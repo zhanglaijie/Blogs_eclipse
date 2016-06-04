@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import top.laijie.blogs.domain.User;
 import top.laijie.blogs.tool.BasicService;
@@ -23,6 +24,7 @@ import top.laijie.blogs.tool.BasicService;
 * @author laijie
 * 
 */
+@Service
 public class CustomUserDetailsService extends BasicService<User> implements UserDetailsService {
 
 	protected static Logger logger = Logger.getLogger("service");

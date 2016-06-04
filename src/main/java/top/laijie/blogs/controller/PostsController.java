@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,6 +27,7 @@ import top.laijie.blogs.service.PostsService;
 import top.laijie.blogs.service.UserService;
 import top.laijie.blogs.service.impl.PostsServiceImpl;
 import top.laijie.blogs.service.impl.UserServiceImpl;
+import top.laijie.blogs.tool.CookieTool;
 import top.laijie.blogs.tool.Page;
 import top.laijie.blogs.tool.UserUtils;
 /**
@@ -54,6 +58,7 @@ public class PostsController {
 	 }
 	 @RequestMapping(value="/createPost.do",method={RequestMethod.GET,RequestMethod.POST})  
 	 public void createPost(HttpServletRequest request,HttpServletResponse response){
+		 response.setCharacterEncoding("UTF-8");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		content = request.getParameter("content");
@@ -67,9 +72,9 @@ public class PostsController {
 		try {
 			postService.createPost(posts);
 			writer = response.getWriter();
-			writer.write("{\"status\":\"success\"}");
+			writer.write("{\"status\":\"新建成功\"}");
 		} catch (IOException e) {
-			writer.write("{\"status\":\"success\"}");
+			writer.write("{\"status\":\"新建失败\"}");
 		}
 	 }
 	 
@@ -87,21 +92,30 @@ public class PostsController {
 		map.addAttribute("post",posts);
 		return "back/save_success.jsp";
 	 }
-	 
+	 /**
+	  * 文章列表 主页
+	  * @param request
+	  * @param response
+	  * @param map
+	  * @return
+	  */
 	 @RequestMapping(value="/listPosts.do",method={RequestMethod.GET,RequestMethod.POST})  
-	 public String listPost(HttpServletRequest request,ModelMap map){
+	 public String listPost(HttpServletRequest request,HttpServletResponse response,ModelMap map){
 		String pageNum = request.getParameter("pageNo");
 		int pageNo = 1;
 		if(StringUtils.isNotBlank(pageNum)){
 			pageNo = Integer.parseInt(pageNum);
 		}
 		Query query = new Query();
+		String email = UserUtils.getCurrentLoginName();
+		query.addCriteria(Criteria.where("author").is(email)); 
+		query.with(new Sort(Sort.Direction.DESC, "postdate"));
 		Page<Posts> postPage = postService.listPost(pageNo, query);
 		logger.info(postPage.toString());
-		String email = UserUtils.getCurrentLoginName();
 		User user = userService.getUserByEmail(email);
 		map.addAttribute("postPage",postPage);
 		map.addAttribute("user",user);
+		CookieTool.addCookie(response,"email",user.getEmail(), 3600);
 		return "back/index.jsp";
 	 }
 	 @RequestMapping("/deletePost.do")
@@ -115,4 +129,14 @@ public class PostsController {
 		map.addAttribute("post",post);
 		return "back/edit_post.jsp";
 	 }
+	 
+	 /**
+	  * 草稿箱
+	  */
+	 @RequestMapping("/listDrafts.do")
+	 public String listDrafts(ModelMap map){
+		 
+		 return null;
+	 }
+
 }

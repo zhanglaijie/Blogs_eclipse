@@ -16,7 +16,6 @@ public class Categories extends Basic implements Serializable{
 	/**
 	 * 分类
 	 */
-	private ObjectId _id;
 	private String title;
 	private ObjectId uid;
 	private String description;
@@ -57,7 +56,5 @@ public class Categories extends Basic implements Serializable{
 	}
 	public void setCount(int count) {
 		this.count = count;
-	}
-	
-	
+	}	
 }

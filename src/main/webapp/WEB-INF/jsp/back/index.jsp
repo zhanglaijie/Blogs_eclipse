@@ -28,61 +28,13 @@
 			<div class="tabbable" id="tabs-547795">
 				<ul class="nav nav-tabs">
 					<li class="active">
-						 <a href="#panel-l1" data-toggle="tab">文章管理</a>
-					</li>
-					<li>
-						 <a href="#panel-l2" data-toggle="tab">类别管理</a>
-					</li>
-					<li >
-						 <a href="#panel-l3" data-toggle="tab">评论管理</a>
-					</li>
-					<li>
-						 <a href="#panel-l4" data-toggle="tab">博客设置</a>
-					</li>
-					<li >
-						 <a href="#panel-l5" data-toggle="tab">博客栏目</a>
-					</li>
-					<li>
-						 <a href="#panel-l6" data-toggle="tab">草稿箱</a>
-					</li>
-					<li>
-						 <a href="#panel-l7" data-toggle="tab">回收站</a>
+						 <a href="#panel-l1" data-toggle="tab">随笔管理</a>
 					</li>
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="panel-l1">
 						<!--正文—左侧导航栏start-->
 						<%@include file="./common/post_list.jsp" %>
-					</div>
-					<div class="tab-pane" id="panel-l2">
-						<p>
-							Howdy, I'm in Section 2.
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-l3">
-						<p>
-							Howdy, I'm in Section 3.
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-l4">
-						<p>
-							Howdy, I'm in Section 4.
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-l5">
-						<p>
-							Howdy, I'm in Section 5.
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-l6">
-						<p>
-							Howdy, I'm in Section 6.
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-l7">
-						<p>
-							Howdy, I'm in Section 7.
-						</p>
 					</div>
 				</div>
 			</div>

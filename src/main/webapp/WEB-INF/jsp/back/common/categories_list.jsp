@@ -15,13 +15,13 @@
 			<td><c:out value="${categories.title}" /></td>
 			<td>
 				<c:choose>
-					<c:when test="${categories.visible == '1'}">无效</c:when>
-					<c:when test="${categories.visible == '0'}">有效</c:when>
+					<c:when test="${categories.visible == '1'}">不可见</c:when>
+					<c:when test="${categories.visible == '0'}">可见</c:when>
 				</c:choose>
 			</td>
 			<td><c:out value="${categories.description}" /></td>
-			<td><a href="${ctx}/postsController/modifyPostNavigation.do?_id=${post._id}">编辑</a></td>
-			<td><a href="${ctx}/postsController/deletePost.do?_id=${post._id}&pageNo=${postPage.pageNo}">删除</a></td>
+			<td><a href="${ctx}/categorieController/to_edit_categorie?_id=${categories._id}">编辑</a></td>
+			<td><a href="${ctx}/categorieController/delete_categorie?_id=${post._id}&pageNo=${postPage.pageNo}">删除</a></td>
 		</tr>
 		</c:forEach>
 	</tbody>

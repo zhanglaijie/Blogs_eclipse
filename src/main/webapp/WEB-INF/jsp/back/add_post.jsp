@@ -82,6 +82,7 @@
 				dataType: 'json',
 				success:function(msg){
 					alert(msg.status);
+					window.location.href="${ctx}/postsController/listPosts.do";
 				}
 			});
 	  	 });

@@ -17,7 +17,7 @@
 	<div class="container">
 	<!-- 导航结束 -->
 	<div class="row clearfix from-top">
-		<div class="col-md-2 column" style="background-color:#E9EFF3;">
+		<div class="col-md-2 column" style="background-color:#E9EFF3; height: 600px;">
 			<div style="text-align: center;">
 			    <input type="file" id="file" accept="image/*" name="file" multiple="multiple" style="display: none;" onchange="uploadImage();"/>
 				<a href="javascript:void(0)" onclick="clickInput();">
@@ -27,6 +27,7 @@
 				<h3><a>@<c:out value="${user.username}"/></a></h3>
 				<a type="button" class="btn btn-default btn-lg" style="margin-top:20px;" href="${ctx}/userController/logout.do">sign out</a>
 			</div>
+			<!-- 
 			<ul class="nav nav-pills nav-stacked" style="margin-top: 30px;">
 				<li id="profile">
 					 <a href="${ctx}/userController/about_me.do">个人信息</a>
@@ -43,7 +44,7 @@
 				<li>
 					 <a href="#">帮助反馈</a>
 				</li>
-			</ul>
+			</ul> -->
 	<!-- 导航结束 -->
 		</div>
 		<div class="col-md-10 column mycontent" style="background-color: rgb(243, 246, 248);">

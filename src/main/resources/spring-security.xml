@@ -21,6 +21,8 @@
         <security:intercept-url pattern="/postsController/listPosts.do" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/postsController/createPost.do" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/postsController/createPostNavigation.do" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/categorieController/create_categorie.do" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/categorieController/list_categorie.do" access="hasRole('ROLE_USER')"/>
         
         <!-- 个人中心 -->
         <security:intercept-url pattern="/userController/about_me.do" access="hasRole('ROLE_USER')"/>

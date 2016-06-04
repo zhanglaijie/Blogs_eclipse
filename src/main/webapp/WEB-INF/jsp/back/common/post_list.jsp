@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <table class="table mytable">
 	<thead>
 		<tr>
@@ -14,7 +15,7 @@
 	<tbody>
 		<c:forEach items="${postPage.datas}" var="post" varStatus="status">
 		<tr>
-			<td><c:out value="${post.title}" /></td>
+			<td><c:out value="${post.title}" />（<fmt:formatDate value="${post.postdate}" pattern="yyyy-MM-dd HH:mm" />）</td>
 			<td>
 				<c:choose>
 					<c:when test="${post.status == '1'}">无效</c:when>

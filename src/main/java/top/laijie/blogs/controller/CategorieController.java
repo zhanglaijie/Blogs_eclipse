@@ -40,6 +40,15 @@ public class CategorieController {
 		logger.info(categories);
 	    return "redirect:/categorieController/list_categorie.do";
 	}
+	
+	@RequestMapping("/to_edit_categorie")
+	public String to_edit_categorie(HttpServletRequest request,ObjectId _id){
+		Categories categories = new Categories();
+		categories = categorieServiceImp.findByOBjId(_id);
+		
+		return null;
+		
+	}
 	/**
 	 * 显示分类
 	 */
@@ -49,13 +58,9 @@ public class CategorieController {
 		String userName = UserUtils.getCurrentLoginName();
 		User user = userService.getUserByEmail(userName);
 		cs.setUid(user.get_id());
-		
 		Query query = new Query(Criteria.where("uid").is(user.get_id()));
-		
 		Page<Categories> page = categorieServiceImp.listCategories(1, query);
 		model.addAttribute("page", page);
 		return "/back/categorie_list.jsp";
-	}
-	
-	
+	}	
 }

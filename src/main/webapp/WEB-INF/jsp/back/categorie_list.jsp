@@ -20,11 +20,11 @@
 	<%@include file="./common/navbar.jsp" %>
 	<!-- 导航结束 -->
 	<div class="row clearfix from-top">
-		<div class="col-md-1 column left-nav">
+		<div class="col-md-2 column left-nav">
 			<%@include file="./common/left_nav.jsp" %>
 	<!-- 导航结束 -->
 		</div>
-		<div class="col-md-11 column mycontent">
+		<div class="col-md-10 column mycontent">
 			<ul class="breadcrumb">
 				<li>
 					 <a href="#">编辑分类</a>

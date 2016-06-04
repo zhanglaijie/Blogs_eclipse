@@ -26,9 +26,9 @@
 	<!-- 导航结束 -->
 		</div>
 		<div class="col-md-10 column mycontent" style="background-color: rgb(243, 246, 248);">
+			
 			<div class="jumbotron well" 
 			style="background-color:#FFF;margin-left: 100px;margin-top: 50px;">
-				<p>修改个人信息</p>
 					<form role="form" method="post" action="${ctx}/userController/modifyInfo.do">
 						<div class="form-group" style="display:none;">
 							<div>
