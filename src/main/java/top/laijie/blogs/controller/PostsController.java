@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import top.laijie.blogs.domain.Posts;
 import top.laijie.blogs.domain.User;
@@ -56,7 +57,9 @@ public class PostsController {
 	 public String createPostNavigation(){
 		return "back/add_post.jsp";
 	 }
+	 
 	 @RequestMapping(value="/createPost.do",method={RequestMethod.GET,RequestMethod.POST})  
+	 @ResponseBody
 	 public void createPost(HttpServletRequest request,HttpServletResponse response){
 		 response.setCharacterEncoding("UTF-8");
 		String title = request.getParameter("title");

@@ -48,8 +48,8 @@
 						<div class="form-group">
 							 <label for="title" class="control-label">可见性:</label>
 							 <div>
-							 	可见<input class="" id="visible" name="visible" type="radio" />
-							 	不可见<input class="" id="visible" name="visible" type="radio" />
+							 	<input id="visible" name="visible" value="0" type="radio" />可见
+							 	<input id="visible" name="visible" value="1" type="radio" />不可见
 							 </div>
 						</div>
 						

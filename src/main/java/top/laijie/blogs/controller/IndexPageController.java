@@ -2,6 +2,7 @@ package top.laijie.blogs.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
@@ -35,17 +36,19 @@ public class IndexPageController {
 	    Query query = new Query();  
         query.addCriteria(Criteria.where("blogaddress").is(name));  
 	    User user = userService.findOne(query);
-	    int pageNo = 1;
-		Query query2 = new Query();
-		Page<Posts> postList = postService.listPost(pageNo , query2);
 	    if(user!=null){
+	    	 int pageNo = 1;
+	 		Query query2 = new Query();
+	 		query2.addCriteria(Criteria.where("author").is(user.getEmail())); 
+	 		query2.with(new Sort(Sort.Direction.DESC, "postdate"));
+	 		Page<Posts> postList = postService.listPost(pageNo , query2);
 	    	 map.addAttribute("user", user);
 	    	 map.addAttribute("postPage", postList);
 	 	    return "/front/laijie.jsp";
-	    }
-	    else{
+	    }else{
+	    	map.addAttribute("message", "该页面不存在");
 	    	return "/register/activate_failure.jsp";
 	    }
-	   
+	 
 	}
 }

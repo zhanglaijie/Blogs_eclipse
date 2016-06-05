@@ -30,11 +30,13 @@ public class CategorieController {
 	public String add_categorie(HttpServletRequest request){
 		String title = request.getParameter("title");
 		String description = request.getParameter("description");
+		int visible = Integer.valueOf(request.getParameter("visible"));
 		String userName = UserUtils.getCurrentLoginName();
 		User user = userService.getUserByEmail(userName);
 		Categories categories = new Categories();
 		categories.setUid(user.get_id());
 		categories.setTitle(title);
+		categories.setVisible(visible);
 		categories.setDescription(description);
 		categorieServiceImp.save(categories);
 		logger.info(categories);

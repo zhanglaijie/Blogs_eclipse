@@ -9,7 +9,7 @@
 						 <a href="#panel-l1" data-toggle="tab">个人信息</a>
 					</li>
 					<li>
-						 <a href="#panel-l2" data-toggle="tab">关注的人</a>
+						 <a href="#panel-l2" data-toggle="tab">我的订阅</a>
 					</li>
 					<li>
 						 <a href="#panel-l3" data-toggle="tab">我的粉丝</a>
@@ -65,45 +65,187 @@
 					</div>
 					<div class="tab-pane" id="panel-l2">
 						<div>
-					        <div class="avatar_list">
-					        	<ul>
-					        		<li>
-					        			<div class="avatar_pic">
-					        				<a href="/u/leiOOlei">
-					        					<img src="http://pic.cnblogs.com/face/u201693.jpg" title="leiOOlei">
-					        				</a>
-					        			</div>
-					        			<div class="avatar_name">
-					        				<a href="/u/leiOOlei/" title="leiOOlei">
-					        					leiOOle
-					        				</a>
-					        			</div>
-					        		</li>
-					        		<li>
-					        			<div class="avatar_pic">
-					        				<a href="/u/leiOOlei">
-					        					<img src="http://pic.cnblogs.com/face/u201693.jpg" title="leiOOlei">
-					        				</a>
-					        			</div>
-					        			<div class="avatar_name">
-					        				<a href="/u/leiOOlei/" title="leiOOlei">
-					        					leiOOle
-					        				</a>
-					        			</div>
-					        		</li>
-					        	</ul>
-					        	</div>
+					       <table class="table table-bordered table-hover table-condensed" style="margin-top: 25px">
+								<thead>
+									<tr>
+										<th>
+											序号
+										</th>
+										<th>
+											用户
+										</th>
+										<th>
+											邮箱
+										</th>
+										<th>
+											订阅时间
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											1
+										</td>
+										<td>
+											方铁
+										</td>
+										<td>
+											fangtie@qq.com
+										</td>
+										<td>
+											02/04/2012
+										</td>
+									</tr>
+									<tr class="success">
+										<td>
+											2
+										</td>
+										<td>
+											SSK
+										</td>
+										<td>
+											ssk@qq.com
+										</td>
+										<td>
+											01/04/2012
+										</td>
+									</tr>
+									<tr class="error">
+										<td>
+											3
+										</td>
+										<td>
+											蓝冰
+										</td>
+										<td>
+											lanbing@qq.com
+										</td>
+										<td>
+											02/04/2012
+										</td>
+									</tr>
+									<tr class="warning">
+										<td>
+											4
+										</td>
+										<td>
+											周鑫
+										</td>
+										<td>
+											zhouxin@qq.com
+										</td>
+										<td>
+											03/04/2012
+										</td>
+									</tr>
+								</tbody>
+							</table>
 					    </div>
 					</div>
 					<div class="tab-pane" id="panel-l3">
-						<p>
-							Howdy, I'm in Section 3.
-						</p>
+						 <table class="table table-bordered table-hover table-condensed" style="margin-top: 25px">
+								<thead>
+									<tr>
+										<th>
+											序号
+										</th>
+										<th>
+											用户
+										</th>
+										<th>
+											邮箱
+										</th>
+										<th>
+											订阅时间
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											1
+										</td>
+										<td>
+											方铁
+										</td>
+										<td>
+											fangtie@qq.com
+										</td>
+										<td>
+											02/04/2012
+										</td>
+									</tr>
+									<tr class="success">
+										<td>
+											2
+										</td>
+										<td>
+											SSK
+										</td>
+										<td>
+											ssk@qq.com
+										</td>
+										<td>
+											01/04/2012
+										</td>
+									</tr>
+									<tr class="warning">
+										<td>
+											3
+										</td>
+										<td>
+											周鑫
+										</td>
+										<td>
+											zhouxin@qq.com
+										</td>
+										<td>
+											03/04/2012
+										</td>
+									</tr>
+									<tr class="error">
+										<td>
+											4
+										</td>
+										<td>
+											蓝冰
+										</td>
+										<td>
+											lanbing@qq.com
+										</td>
+										<td>
+											02/04/2012
+										</td>
+									</tr>
+								</tbody>
+							</table>
 					</div>
 					<div class="tab-pane" id="panel-l4">
-						<p>
-							Howdy, I'm in Section 4.
-						</p>
+						<form role="form" method="post"
+							action="${ctx}/postsController/modifyPost.do">
+							<div class="form-group" style="display: none;">
+								<div>
+									<input name="_id" value="${post._id}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="title" class="control-label">用户名:</label>
+								<div>
+									<input class="form-control" id="title" name="title" type="text"
+										value="${post.title}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="title" class="control-label">邮箱名称:</label>
+								<div>
+									<input class="form-control" id="title" name="title" type="text"
+										value="${post.title}" />
+								</div>
+							</div>
+					
+							<button type="submit" id="sub" class="btn btn-default">保存</button>
+						</form>
 					</div>
 					<div class="tab-pane" id="panel-l5">
 						<p>
