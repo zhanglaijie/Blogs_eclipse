@@ -16,7 +16,7 @@
         <security:intercept-url pattern="/userController/login.do" access="permitAll"/>  
         <security:intercept-url pattern="/userController/admin" access="hasRole('ROLE_ADMIN')"/>  
         <security:intercept-url pattern="/userController/common" access="hasRole('ROLE_USER')"/>  
-        
+         <security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>  
         <!-- 文章操作 -->
         <security:intercept-url pattern="/postsController/listPosts.do" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/postsController/createPost.do" access="hasRole('ROLE_USER')"/>
@@ -24,19 +24,20 @@
         <security:intercept-url pattern="/categorieController/create_categorie.do" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/categorieController/list_categorie.do" access="hasRole('ROLE_USER')"/>
         
-        <!-- 个人中心 -->
+        <!-- 个人中心 default-target-url="/postsController/listPosts.do" -->
         <security:intercept-url pattern="/userController/about_me.do" access="hasRole('ROLE_USER')"/>
         <security:form-login  
                 login-page="/userController/login.do"   
-                authentication-failure-url="/userController/login.do?error=true"   
-                default-target-url="/postsController/listPosts.do"/>  
-              
+                authentication-failure-url="/userController/login.do?error=true"
+                authentication-success-handler-ref="myAuthenticationSuccessHandler"
+         />  
+          
         <security:logout   
                 invalidate-session="true"   
                 logout-success-url="/userController/login.do"   
                 logout-url="/userController/logout.do"/>  
     </security:http>  
-      
+        
     <!-- 指定一个自定义的authentication-manager :customUserDetailsService -->  
     <security:authentication-manager>  
             <security:authentication-provider user-service-ref="customUserDetailsService">  
@@ -52,5 +53,7 @@
         也可以理解成:以后我们和数据库操作就是通过customUserDetailsService来进行关联.  
      -->  
     <bean id="customUserDetailsService" class="top.laijie.blogs.service.impl.CustomUserDetailsService"/>  
-      
+     
+	<!-- http://blog.csdn.net/z69183787/article/details/21190083 -->
+     <bean id="myAuthenticationSuccessHandler"  class="top.laijie.blogs.service.impl.MySimpleUrlAuthenticationSuccessHandler" />  
 </beans>  

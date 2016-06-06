@@ -17,13 +17,17 @@ public class CategorieServiceImp extends BasicService<Categories> implements Cat
 	
 	
 	private static final int PAGE_SIZE = 10;
+	
+	@Override
 	public void createCategories(Categories categories){
 		super.save(categories);
 	}
 	
+	@Override
 	public Page<Categories> listCategories(int pageNo,Query query) {
 		return this.getPage(pageNo, PAGE_SIZE, query);
 	}
+	
 	protected  Class<Categories> getEntityClass(){
 		return Categories.class;
 	}

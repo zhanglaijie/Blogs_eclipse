@@ -1,10 +1,13 @@
 package top.laijie.blogs.service;
 
 import java.text.ParseException;
+import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.Query;
 
 import top.laijie.blogs.domain.User;
+import top.laijie.blogs.tool.Page;
 import top.laijie.blogs.tool.ServiceException;
 
 
@@ -37,4 +40,10 @@ public interface UserService{
 	public User getUserBySomething(Query query);
 	
 	public User findByNameAndPwd(String email,String passwd);
+	public void test();
+	public Page<User> listUser(int pageNo, Query query);
+	public List<User> listUser();
+	public void DeleteOne(ObjectId _id);
+	void updateUserByObjId(User user);
+	
 }

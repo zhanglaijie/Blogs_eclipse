@@ -38,9 +38,10 @@ public class CustomUserDetailsService extends BasicService<User> implements User
 		Query query = new Query();  
         query.addCriteria(Criteria.where("email").is(email));  
         User user = mongoTemplate.findOne(query, User.class,USER_COLLECTION);  
-		if(user.getStatus()==0){
+		if(user.getStatus()!=1){
 			status =false;
 		}
+		
         userdetail = new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword()
 				.toLowerCase(), true, true, true,status,
 				getAuthorities(user.getAuth()));
@@ -63,8 +64,11 @@ public class CustomUserDetailsService extends BasicService<User> implements User
 
 		// 所有的用户默认拥有ROLE_USER权限
 		logger.debug("Grant ROLE_USER to this user");
-		authList.add(new GrantedAuthorityImpl("ROLE_USER"));
-
+		
+		if (access.compareTo(0) == 0) {
+			logger.debug("Grant ROLE_ADMIN to this user");
+			authList.add(new GrantedAuthorityImpl("ROLE_USER"));
+		}
 		// 如果参数access为1.则拥有ROLE_ADMIN权限
 		if (access.compareTo(1) == 0) {
 			logger.debug("Grant ROLE_ADMIN to this user");

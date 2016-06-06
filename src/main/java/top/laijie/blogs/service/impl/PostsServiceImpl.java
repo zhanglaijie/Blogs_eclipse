@@ -20,21 +20,22 @@ import top.laijie.blogs.tool.Page;
 public class PostsServiceImpl extends BasicService<Posts> implements PostsService{
 	
 	 private static final int PAGE_SIZE = 10;
-
+	 
+	@Override
 	public Posts loadPosts(ObjectId _id){
 		  return mongoTemplate.findOne(new Query(Criteria.where("_id").is(_id)), Posts.class);
 	 }
-
+	@Override
 	public void createPost(Posts posts) {
 		this.save(posts);
 		
 	}
-
+	@Override
 	public List<Posts> listPosts() {
 		// TODO Auto-generated method stub
 		return this.findAll();
 	}
-
+	@Override
 	public Page<Posts> listPost(int pageNo,Query query) {
 		return this.getPage(pageNo, PAGE_SIZE, query);
 	}

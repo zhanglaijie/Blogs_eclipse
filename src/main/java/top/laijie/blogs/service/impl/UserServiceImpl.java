@@ -2,25 +2,30 @@ package top.laijie.blogs.service.impl;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.Criteria;  
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;  
 
 import top.laijie.blogs.controller.RegisterAndFindPasswdController;
 import top.laijie.blogs.domain.Categories;
+import top.laijie.blogs.domain.Posts;
 import top.laijie.blogs.domain.User;
 import top.laijie.blogs.mail.SendEmail;
 import top.laijie.blogs.service.UserService;
 import top.laijie.blogs.tool.BasicService;
 import top.laijie.blogs.tool.Des3;
 import top.laijie.blogs.tool.MD5Util;
+import top.laijie.blogs.tool.Page;
 import top.laijie.blogs.tool.PropUtils;
 import top.laijie.blogs.tool.ServiceException;
   
 	@Service   
 	public class UserServiceImpl extends BasicService<User> implements UserService  {     
+		private static final int PAGE_SIZE = 10;
 		private static Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
 		private static String DOMIAN = PropUtils.readPropertiesFile("mail.properties","domain");
 		/** 
@@ -28,16 +33,25 @@ import top.laijie.blogs.tool.ServiceException;
 	     * @param name 
 	     * @return  
 	     */  
+		@Override
 	    public User findUserByName(String nicename){  
 	           
 	        return mongoTemplate.findOne(new Query(Criteria.where("nicename").is(nicename)), User.class, USER_COLLECTION);  
 	           
 	    } 
-	    
+		
+		
+		@Override
+		public void DeleteOne(ObjectId _id){
+			super.deleteByOBjId(_id);
+		}
+		
+		@Override
 	    public void test(){
 	    	System.out.println("--");
 	    }
-
+		
+		@Override
 		public void updateUserByName(String nicename) {
 			Query query = new Query();  
 	        query.addCriteria(Criteria.where("nicename").is(nicename));  
@@ -46,7 +60,8 @@ import top.laijie.blogs.tool.ServiceException;
 	        mongoTemplate.save(user, USER_COLLECTION);
 
 		}
-
+		
+		@Override
 		public void updateUserByEmail(String email) {
 			Query query = new Query();  
 	        query.addCriteria(Criteria.where("email").is(email));  
@@ -56,19 +71,31 @@ import top.laijie.blogs.tool.ServiceException;
 
 		}
 		
+		@Override
+		public void updateUserByObjId(User user) {
+			Query query = new Query();  
+	        query.addCriteria(Criteria.where("_id").is(user.get_id()));  
+	        User user2 = mongoTemplate.findOne(query, User.class,USER_COLLECTION);  
+	        user2.setStatus(user.getStatus());
+	        mongoTemplate.save(user2, USER_COLLECTION);
+
+		}
+		
+		@Override
 		public User getUserByEmail(String email) {
 			Query query = new Query();  
 	        query.addCriteria(Criteria.where("email").is(email));  
 	        User user = mongoTemplate.findOne(query, User.class,USER_COLLECTION);  
 	        return user;
 		} 
-
+		
+		@Override
 		public User getUserBySomething(Query query) {
 	        User user = mongoTemplate.findOne(query, User.class,USER_COLLECTION);  
 	        return user;
 		} 
 
-		
+		@Override
 		public User getUserByblogaddress(String blogaddress) {
 			Query query = new Query();  
 	        query.addCriteria(Criteria.where("blogaddress").is(blogaddress));  
@@ -77,7 +104,8 @@ import top.laijie.blogs.tool.ServiceException;
 		}   
 		  /** 
 	     * 处理注册 
-	     */  
+	     */ 
+		@Override
 	    public void processregister(User user){  
 	    	
 	        user.setRegisterTime(new Date());  
@@ -105,6 +133,7 @@ import top.laijie.blogs.tool.ServiceException;
 	          
 	    }  
 	    
+		@Override
 		public void processFindPassword(User user) {
 			/*user.setRegisterTime(new Date());  
 	        user.setStatus(0);  
@@ -132,6 +161,7 @@ import top.laijie.blogs.tool.ServiceException;
 	     * @throws ParseException  
 	     */  
 	      ///传递激活码和email过来  
+		@Override
 	    public void processActivate(String email , String validateCode)throws ServiceException, ParseException{    
 	         //数据访问层，通过email获取用户信息  
 	    	User user = mongoTemplate.findOne(new Query(Criteria.where("email").is(email)), User.class, USER_COLLECTION);  
@@ -164,6 +194,7 @@ import top.laijie.blogs.tool.ServiceException;
 	        }      
 	    }
 
+		@Override
 		public User getUserByEmailAndValidate(String email, String validateCode) {
 			Query query = new Query();  
 	        query.addCriteria(Criteria.where("email").is(email));  
@@ -172,16 +203,29 @@ import top.laijie.blogs.tool.ServiceException;
 	        return user;
 		}
 		
+		@Override
 		protected  Class<User> getEntityClass(){
 			return User.class;
 		}
-
+		
+		@Override
 		public User findByNameAndPwd(String email, String password) {
 			Query query = new Query();  
 	        query.addCriteria(Criteria.where("email").is(email));  
 	        query.addCriteria(Criteria.where("password").is(password));
 	        User user = mongoTemplate.findOne(query, User.class);  
 	        return user;
+		}
+		
+		@Override
+		public Page<User> listUser(int pageNo,Query query) {
+			return this.getPage(pageNo, PAGE_SIZE, query);
+		}
+		
+		@Override
+		public List<User> listUser() {
+			// TODO Auto-generated method stub
+			return this.findAll();
 		}
 	}
 

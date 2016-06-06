@@ -129,6 +129,11 @@ public class BasicService<T> {
 	        query.addCriteria(Criteria.where("_id").is(_id));  
 			mongoTemplate.remove(query , this.getEntityClass());
 		}
+		public void deleteByOBjId(ObjectId _id){
+			Query query = new Query();
+	        query.addCriteria(Criteria.where("_id").is(_id));  
+			mongoTemplate.remove(query , this.getEntityClass());
+		}
 		/**
 		 * 通过ID获取记录,并且指定了集合名(表的意思)
 		 * 

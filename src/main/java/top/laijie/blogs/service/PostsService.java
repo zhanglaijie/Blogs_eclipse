@@ -20,4 +20,8 @@ public interface PostsService{
 
 	public List<Posts> listPosts();
 	public Page<Posts> listPost(int pageNo, Query query);
+
+	public Posts findById(String _id);
+
+	public void DeleteById(String _id);
 }

@@ -44,15 +44,26 @@
 					 <label for="exampleInputPassword1"> 内容(Summernote编辑器)</label>
 					 <div id="summernote">Hello Summernote</div>
 				</div>
-				<div class="form-group">
-					 <label for="exampleInputFile">File input</label><input id="exampleInputFile" type="file" />
-					<p class="help-block">
-						Example block-level help text here.
-					</p>
-				</div>
-				<div class="checkbox">
-					 <label><input type="checkbox" />Check me out</label>
-				</div> <button type="button" id="sub" class="btn btn-default">Submit</button>
+				<div class="form-group form-inline">
+					<div class="col-md-3">
+						选择目录
+						<select>
+							<c:forEach items="${categorie.datas}" var="categorie" varStatus="status">
+							<option value="categorie._id">
+								${categorie.title}
+							</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="col-md-3">
+						<div class="checkbox">
+						<label><input type="checkbox" />是否发布</label>
+					</div>
+					</div>
+					<div class="col-md-4">
+						<button type="button" id="sub" class="btn btn-default">保存</button>
+					</div>
+					</div>
 			</form>
 		</div>
 	</div>

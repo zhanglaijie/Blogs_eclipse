@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import top.laijie.blogs.domain.Categories;
 import top.laijie.blogs.domain.Posts;
 import top.laijie.blogs.domain.User;
+import top.laijie.blogs.service.CategorieService;
 import top.laijie.blogs.service.PostsService;
 import top.laijie.blogs.service.UserService;
 import top.laijie.blogs.service.impl.PostsServiceImpl;
@@ -41,9 +43,13 @@ import top.laijie.blogs.tool.UserUtils;
 public class PostsController {
 	 private static Logger logger = Logger.getLogger(UserController.class.getName());  
 	 @Resource  
-	private PostsServiceImpl postService;
+	 private PostsService postService;
 	 @Resource
 	 private UserServiceImpl userService;
+	 
+	 @Resource
+	 private CategorieService categorieService;
+	 
 	 @RequestMapping(value="/loadPosts.do",method={RequestMethod.GET,RequestMethod.POST})  
 	 public void loadPostById(){
 		ObjectId _id = new ObjectId("56e24b51b2fcc518ac5e00fa"); 
@@ -54,7 +60,11 @@ public class PostsController {
 	  * 导航到新建文章
 	  */
 	 @RequestMapping(value="/createPostNavigation.do",method={RequestMethod.GET,RequestMethod.POST})  
-	 public String createPostNavigation(){
+	 public String createPostNavigation(ModelMap map){
+		 User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
+		 Query query = new Query(Criteria.where("uid").is(user.get_id()));
+		 Page<Categories> categorie = categorieService.listCategories(1, query);
+		 map.addAttribute("categorie", categorie);
 		return "back/add_post.jsp";
 	 }
 	 
@@ -68,7 +78,8 @@ public class PostsController {
 		Posts posts = new Posts();
 		posts.setTitle(title);
 		posts.setContent(content);
-		posts.setAuthor(UserUtils.getCurrentLoginName());
+		User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
+		posts.setUid(user.get_id());
 		posts.setPostdate(new Date());
 		postService.createPost(posts);
 		PrintWriter writer = null;
@@ -89,7 +100,7 @@ public class PostsController {
 		posts = postService.findById(_id);
 		posts.setTitle(title);
 		posts.setContent(content);
-		posts.setAuthor(UserUtils.getCurrentLoginName());
+		//posts.setAuthor(UserUtils.getCurrentLoginName());
 		posts.setPostdate(new Date());
 		postService.createPost(posts);
 		map.addAttribute("post",posts);
@@ -110,12 +121,12 @@ public class PostsController {
 			pageNo = Integer.parseInt(pageNum);
 		}
 		Query query = new Query();
-		String email = UserUtils.getCurrentLoginName();
-		query.addCriteria(Criteria.where("author").is(email)); 
+		User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
+		query.addCriteria(Criteria.where("uid").is(user.get_id())); 
 		query.with(new Sort(Sort.Direction.DESC, "postdate"));
 		Page<Posts> postPage = postService.listPost(pageNo, query);
 		logger.info(postPage.toString());
-		User user = userService.getUserByEmail(email);
+		//User user = userService.getUserByEmail(email);
 		map.addAttribute("postPage",postPage);
 		map.addAttribute("user",user);
 		CookieTool.addCookie(response,"email",user.getEmail(), 3600);

@@ -41,7 +41,7 @@ public class UserController {
         if (error == true) {  
             // Assign an error message  
             model.put("error",  
-                    "未验证或密码错误");  //未验证或密码错误
+                    "登陆失败");  //未验证或密码错误
         } else {  
             model.put("error", "");  
         }  
