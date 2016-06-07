@@ -13,6 +13,7 @@ import top.laijie.blogs.domain.User;
 import top.laijie.blogs.service.UserService;
 import top.laijie.blogs.service.impl.UserServiceImpl;
 import top.laijie.blogs.tool.Page;
+import top.laijie.blogs.tool.UserUtils;
 
 @Controller
 @RequestMapping("/admin")
@@ -32,8 +33,13 @@ public class AdminController {
 	}
 	@RequestMapping("/userList")
 	public String left(Model model){
-		//Query query = new Query();
 		List<User> userList = userService.listUser();
+		for (int i = userList.size() - 1; i >= 0; i--) {
+			String str = userList.get(i).getEmail();
+			if (str.equals(UserUtils.getCurrentLoginName())) {
+				userList.remove(userList.get(i));
+			}
+			}
 		model.addAttribute("userList", userList);
 		return "admin/userList.jsp";
 	}
@@ -42,9 +48,7 @@ public class AdminController {
 	public String deleteUser(Model model,String id){
 		ObjectId _id = new ObjectId(id);
 		userService.DeleteOne(_id );
-		List<User> userList = userService.listUser();
-		model.addAttribute("userList", userList);
-		return "admin/userList.jsp";
+		return "redirect:/admin/userList";
 	}
 	
 	@RequestMapping("/changeStatus")
@@ -54,12 +58,15 @@ public class AdminController {
 		user.set_id(_id);
 		user.setStatus(status);
 		userService.updateUserByObjId(user);
-		List<User> userList = userService.listUser();
-		model.addAttribute("userList", userList);
-		return "admin/userList.jsp";
+		return "redirect:/admin/userList";
 	}
 	@RequestMapping("/index")
 	public String index(Model model){
+		String username = UserUtils.getCurrentLoginName();
+		User user  = userService.getUserByEmail(username);
+		model.addAttribute("nickname",user.getNicename());
 		return "admin/index2.jsp";
 	}
+	
+	
 }

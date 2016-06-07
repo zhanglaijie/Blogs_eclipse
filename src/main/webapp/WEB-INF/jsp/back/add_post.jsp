@@ -46,8 +46,9 @@
 				</div>
 				<div class="form-group form-inline">
 					<div class="col-md-3">
-						选择目录
+						选择分类
 						<select>
+							<option>选择分类</option>
 							<c:forEach items="${categorie.datas}" var="categorie" varStatus="status">
 							<option value="categorie._id">
 								${categorie.title}
@@ -86,6 +87,10 @@
 	  	 $("#sub").click(function(){
 			var content = $('#summernote').summernote('code');
 			var title =$('#title').val();
+			if(!title.trim()){
+				alert("标题不能为空");
+				return;
+			}
 			$.ajax({
 				type:"POST",
 				url:"${ctx}/postsController/createPost.do",

@@ -17,6 +17,10 @@ $(function(){
 		$("#menuFrame").attr("src","${ctx}/admin/userList");
 	}
 	);
+	$("#createSensitive").click(function(){
+		$("#menuFrame").attr("src","${ctx}/admin/sensitive/listNavigation");
+	}
+	);
 	
 });
 </script>
@@ -25,18 +29,18 @@ $(function(){
     <!--顶部-->
     <div class="layout_top_header">
             <div style="float: left"><span style="font-size: 16px;line-height: 45px;padding-left: 20px;color: #8d8d8d">壹博客后台管理系统</span></div>
-              <!-- <div id="ad_setting" class="ad_setting">
+              <div id="ad_setting" class="ad_setting">
               <a class="ad_setting_a" href="javascript:;">
                     <i class="icon-user glyph-icon" style="font-size: 20px"></i>
-                    <span>管理员</span>
+                    <span><c:out value="${nickname}"></c:out> </span>
                     <i class="icon-chevron-down glyph-icon"></i>
                 </a>
                 <ul class="dropdown-menu-uu" style="display: none" id="ad_setting_ul">
-                    <li class="ad_setting_ul_li"> <a href="javascript:;"><i class="icon-user glyph-icon"></i> 个人中心 </a> </li>
-                    <li class="ad_setting_ul_li"> <a href="javascript:;"><i class="icon-cog glyph-icon"></i> 设置 </a> </li>
-                    <li class="ad_setting_ul_li"> <a href="javascript:;"><i class="icon-signout glyph-icon"></i> <span class="font-bold">退出</span> </a> </li>
+                  <!--   <li class="ad_setting_ul_li"> <a href="javascript:;"><i class="icon-user glyph-icon"></i> 个人中心 </a> </li>
+                    <li class="ad_setting_ul_li"> <a href="javascript:;"><i class="icon-cog glyph-icon"></i> 设置 </a> </li> -->
+                    <li class="ad_setting_ul_li"> <a href="${ctx}/userController/logout.do"><i class="icon-signout glyph-icon"></i> <span class="font-bold">退出</span> </a> </li>
                 </ul>
-            </div> -->
+            </div>
     </div>
     <!--顶部结束-->
     <!--菜单-->
@@ -50,17 +54,16 @@ $(function(){
             </li>
             <li class="childUlLi">
                 <a href="#" target="menuFrame"> <i class="glyph-icon icon-reorder"></i>用户管理</a>
-                <ul style="display: none;">
+                <ul>
                     <li><a id="userlist"><i class="glyph-icon icon-chevron-right"></i>用户列表</a></li>
-                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>展示商品管理</a></li>
-                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>数据管理</a></li>
+<!--                     <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>展示商品管理</a></li>
+                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>数据管理</a></li> -->
                 </ul>
             </li>
             <li class="childUlLi">
-                <a href="#" target="menuFrame"> <i class="glyph-icon icon-reorder"></i>屏蔽词管理</a>
-                <ul style="display: none;">
-                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>修改密码</a></li>
-                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>帮助</a></li>
+                <a href="#" target="menuFrame"> <i class="glyph-icon icon-reorder"></i>敏感词管理</a>
+                <ul >
+                    <li><a id="createSensitive"><i class="glyph-icon icon-chevron-right"></i>敏感词列表</a></li>
                 </ul>
             </li>
             <li class="childUlLi">

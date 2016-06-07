@@ -38,8 +38,8 @@ public class IndexPageController {
 	    User user = userService.findOne(query);
 	    if(user!=null){
 	    	 int pageNo = 1;
-	 		Query query2 = new Query();
-	 		query2.addCriteria(Criteria.where("author").is(user.getEmail())); 
+	 		//Query query2 = new Query();
+	 		 Query query2 = new Query(Criteria.where("uid").is(user.get_id()));
 	 		query2.with(new Sort(Sort.Direction.DESC, "postdate"));
 	 		Page<Posts> postList = postService.listPost(pageNo , query2);
 	    	 map.addAttribute("user", user);

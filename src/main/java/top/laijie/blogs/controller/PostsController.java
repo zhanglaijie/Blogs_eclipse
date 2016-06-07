@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import top.laijie.blogs.domain.Categories;
 import top.laijie.blogs.domain.Posts;
 import top.laijie.blogs.domain.User;
+import top.laijie.blogs.keyword.SensitivewordFilter;
 import top.laijie.blogs.service.CategorieService;
 import top.laijie.blogs.service.PostsService;
 import top.laijie.blogs.service.UserService;
@@ -76,8 +78,9 @@ public class PostsController {
 		String content = request.getParameter("content");
 		content = request.getParameter("content");
 		Posts posts = new Posts();
-		posts.setTitle(title);
-		posts.setContent(content);
+		posts.setTitle(repalce(title));
+		
+		posts.setContent(repalce(content));
 		User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
 		posts.setUid(user.get_id());
 		posts.setPostdate(new Date());
@@ -132,6 +135,7 @@ public class PostsController {
 		CookieTool.addCookie(response,"email",user.getEmail(), 3600);
 		return "back/index.jsp";
 	 }
+	 
 	 @RequestMapping("/deletePost.do")
 	 public String deletePost(String _id,String pageNo){
 		postService.DeleteById(_id);
@@ -152,5 +156,11 @@ public class PostsController {
 		 
 		 return null;
 	 }
-
+	 private String repalce(String string){
+		 SensitivewordFilter filter = new SensitivewordFilter();
+			return filter.replaceSensitiveWord(string,2,"*");
+	 }
+	
+		
+	
 }
