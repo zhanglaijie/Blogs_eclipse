@@ -67,7 +67,7 @@ public class PostsController {
 		 Query query = new Query(Criteria.where("uid").is(user.get_id()));
 		 Page<Categories> categorie = categorieService.listCategories(1, query);
 		 map.addAttribute("categorie", categorie);
-		return "back/add_post.jsp";
+		return "author/post/add_post.jsp";
 	 }
 	 
 	 @RequestMapping(value="/createPost.do",method={RequestMethod.GET,RequestMethod.POST})  
@@ -76,12 +76,30 @@ public class PostsController {
 		 response.setCharacterEncoding("UTF-8");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
-		content = request.getParameter("content");
+		//content = request.getParameter("content");
+		String cateId = request.getParameter("categorieId");
+		ObjectId categorieId =null;
+		if(cateId!=null&&!cateId.equals("")){
+			 categorieId = new ObjectId(cateId);
+		}
+		String excerpt = request.getParameter("excerpt");
+		String status = request.getParameter("status");
 		Posts posts = new Posts();
+		posts.setStatus(Integer.parseInt(status));
 		posts.setTitle(repalce(title));
-		
 		posts.setContent(repalce(content));
+		posts.setCategorieId(categorieId);
 		User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
+		if(excerpt!=null&&!excerpt.equals("")){
+			posts.setExcerpt(repalce(excerpt));
+		}else{
+			if(content.length()>150){
+				posts.setExcerpt(repalce(content.substring(0, 150)));
+			}else{
+				posts.setExcerpt(repalce(content));
+			}
+			
+		}
 		posts.setUid(user.get_id());
 		posts.setPostdate(new Date());
 		postService.createPost(posts);
@@ -101,13 +119,13 @@ public class PostsController {
 		String content = request.getParameter("content");
 		Posts posts = new Posts();
 		posts = postService.findById(_id);
-		posts.setTitle(title);
-		posts.setContent(content);
+		posts.setTitle(repalce(title));
+		posts.setContent(repalce(content));
 		//posts.setAuthor(UserUtils.getCurrentLoginName());
 		posts.setPostdate(new Date());
 		postService.createPost(posts);
 		map.addAttribute("post",posts);
-		return "back/save_success.jsp";
+		return "author/post/save_success.jsp";
 	 }
 	 /**
 	  * 文章列表 主页
@@ -126,6 +144,7 @@ public class PostsController {
 		Query query = new Query();
 		User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
 		query.addCriteria(Criteria.where("uid").is(user.get_id())); 
+		query.addCriteria(Criteria.where("status").is(1)); 
 		query.with(new Sort(Sort.Direction.DESC, "postdate"));
 		Page<Posts> postPage = postService.listPost(pageNo, query);
 		logger.info(postPage.toString());
@@ -133,7 +152,7 @@ public class PostsController {
 		map.addAttribute("postPage",postPage);
 		map.addAttribute("user",user);
 		CookieTool.addCookie(response,"email",user.getEmail(), 3600);
-		return "back/index.jsp";
+		return "author/post/post_list.jsp";
 	 }
 	 
 	 @RequestMapping("/deletePost.do")
@@ -145,22 +164,47 @@ public class PostsController {
 	 public String modifyPost(String _id,ModelMap map){
 		Posts post = postService.findById(_id);
 		map.addAttribute("post",post);
-		return "back/edit_post.jsp";
+		return "author/post/edit_post.jsp";
 	 }
 	 
 	 /**
 	  * 草稿箱
 	  */
 	 @RequestMapping("/listDrafts.do")
-	 public String listDrafts(ModelMap map){
-		 
-		 return null;
+	 public String listDrafts(HttpServletRequest request,HttpServletResponse response,ModelMap map){
+			String pageNum = request.getParameter("pageNo");
+			int pageNo = 1;
+			if(StringUtils.isNotBlank(pageNum)){
+				pageNo = Integer.parseInt(pageNum);
+			}
+			Query query = new Query();
+			User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
+			query.addCriteria(Criteria.where("uid").is(user.get_id())); 
+			query.addCriteria(Criteria.where("status").is(0)); 
+			query.with(new Sort(Sort.Direction.DESC, "postdate"));
+			Page<Posts> postPage = postService.listPost(pageNo, query);
+			logger.info(postPage.toString());
+			//User user = userService.getUserByEmail(email);
+			map.addAttribute("postPage",postPage);
+			map.addAttribute("user",user);
+			CookieTool.addCookie(response,"email",user.getEmail(), 3600);
+		 return "author/post/draft_list.jsp";
 	 }
+	 
+	 //修改文章状态
+	 @RequestMapping("/changeStatus")
+	 public String changeStatus(int status,int pageNo,String _id){
+		 postService.changeStatus(_id,status);
+		 if(status==1){
+			 return "redirect:/postsController/listDrafts.do?pageNo="+pageNo; 
+		 }else {
+			 return "redirect:/postsController/listPosts.do?pageNo="+pageNo; 
+		 }
+	 }
+	 
 	 private String repalce(String string){
 		 SensitivewordFilter filter = new SensitivewordFilter();
 			return filter.replaceSensitiveWord(string,2,"*");
 	 }
-	
-		
-	
+
 }

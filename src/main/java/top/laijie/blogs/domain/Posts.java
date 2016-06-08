@@ -27,6 +27,7 @@ public class Posts extends Basic implements Serializable{
 	private int status=0;
 	private String type;
 	private String author;
+	private ObjectId categorieId;
 	private Date postdate;
 	private Date modifieddate;
 	private String tags;
@@ -105,19 +106,19 @@ public class Posts extends Basic implements Serializable{
 	public void setUid(ObjectId uid) {
 		this.uid = uid;
 	}
+	
+	public ObjectId getCategorieId() {
+		return categorieId;
+	}
+	public void setCategorieId(ObjectId categorieId) {
+		this.categorieId = categorieId;
+	}
 	public Posts() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	@Override
-	public String toString() {
-		return "Posts [title=" + title + ", content=" + content + ", uid=" + uid + ", excerpt=" + excerpt + ", status="
-				+ status + ", type=" + type + ", author=" + author + ", postdate=" + postdate + ", modifieddate="
-				+ modifieddate + ", tags=" + tags + ", comment_count=" + comment_count + ", read_count=" + read_count
-				+ "]";
-	}
 	public Posts(String title, String content, ObjectId uid, String excerpt, int status, String type, String author,
-			Date postdate, Date modifieddate, String tags, int comment_count, int read_count) {
+			ObjectId categorieId, Date postdate, Date modifieddate, String tags, int comment_count, int read_count) {
 		super();
 		this.title = title;
 		this.content = content;
@@ -126,11 +127,19 @@ public class Posts extends Basic implements Serializable{
 		this.status = status;
 		this.type = type;
 		this.author = author;
+		this.categorieId = categorieId;
 		this.postdate = postdate;
 		this.modifieddate = modifieddate;
 		this.tags = tags;
 		this.comment_count = comment_count;
 		this.read_count = read_count;
+	}
+	@Override
+	public String toString() {
+		return "Posts [title=" + title + ", content=" + content + ", uid=" + uid + ", excerpt=" + excerpt + ", status="
+				+ status + ", type=" + type + ", author=" + author + ", categorieId=" + categorieId + ", postdate="
+				+ postdate + ", modifieddate=" + modifieddate + ", tags=" + tags + ", comment_count=" + comment_count
+				+ ", read_count=" + read_count + "]";
 	}
 	
 }

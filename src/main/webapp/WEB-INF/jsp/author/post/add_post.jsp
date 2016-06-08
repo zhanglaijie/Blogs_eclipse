@@ -19,8 +19,8 @@
   </head>
   <body>
 	<div class="container">
-	<div class="row clearfix from-top">
-		<div class="col-md-10 column mycontent">
+	<div class="row clearfix ">
+		
 			<ul class="breadcrumb">
 				<li>
 					 <a href="#">添加新随笔</a>
@@ -41,7 +41,6 @@
 					<div class="col-md-6">
 						选择分类
 						<select name="categorieId" id="categorieId">
-							<option>选择分类</option>
 							<c:forEach items="${categorie.datas}" var="categorie" varStatus="status">
 							<option value="${categorie._id}">
 								${categorie.title}
@@ -70,7 +69,6 @@
 						</div>
 					</div>
 			</form>
-		</div>
 	</div>
 </div>
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -24,4 +24,6 @@ public interface PostsService{
 	public Posts findById(String _id);
 
 	public void DeleteById(String _id);
+
+	public void changeStatus(String _id, int status);
 }

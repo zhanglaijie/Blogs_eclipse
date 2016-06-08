@@ -47,13 +47,7 @@ $(function(){
     <div class="layout_left_menu">
         <ul class="tendina" id="menu">
             <li class="childUlLi">
-               <a href="#" target="menuFrame"><i class="glyph-icon icon-home"></i>首页</a>
-                <ul style="display: none;">
-                    <li><a href="#" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>用户添加</a></li>
-                </ul>
-            </li>
-            <li class="childUlLi">
-                <a href="#" target="menuFrame"> <i class="glyph-icon icon-reorder"></i>用户管理</a>
+                <a href="#" target="menuFrame"> <i class="glyph-icon icon-home"></i>用户管理</a>
                 <ul>
                     <li><a id="userlist"><i class="glyph-icon icon-chevron-right"></i>用户列表</a></li>
 <!--                     <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>展示商品管理</a></li>
@@ -85,7 +79,7 @@ $(function(){
         </div>
         <div class="mian_content">
             <div id="page_content">
-                <iframe id="menuFrame" name="menuFrame" src="main.htm" style="overflow:visible;" scrolling="yes" frameborder="no" height="100%" width="100%"></iframe>
+                <iframe id="menuFrame" name="menuFrame" src="${ctx}/admin/userList" style="overflow:visible;" scrolling="yes" frameborder="no" height="100%" width="100%"></iframe>
             </div>
         </div>
     </div>

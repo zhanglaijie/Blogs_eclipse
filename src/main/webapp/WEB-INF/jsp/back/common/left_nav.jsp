@@ -12,7 +12,7 @@
 					<a href="${ctx}/postsController/createPostNavigation.do">添加新随笔</a>
 				</div>
 				<div class="panel-body">
-					<a href="${ctx}/postsController/listDrafts.do">草稿箱</a>
+					<a class="draft">草稿箱</a>
 				</div>
 				<div class="panel-body">
 					博客签名

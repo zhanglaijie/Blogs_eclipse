@@ -1,16 +1,21 @@
 package top.laijie.blogs.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+
 import top.laijie.blogs.domain.Categories;
 import top.laijie.blogs.domain.User;
 import top.laijie.blogs.service.impl.CategorieServiceImp;
@@ -43,26 +48,41 @@ public class CategorieController {
 	    return "redirect:/categorieController/list_categorie.do";
 	}
 	
-	@RequestMapping("/to_edit_categorie")
-	public String to_edit_categorie(HttpServletRequest request,ObjectId _id){
-		Categories categories = new Categories();
-		categories = categorieServiceImp.findByOBjId(_id);
+	/*@RequestMapping("/to_edit_categorie")
+	public String to_edit_categorie(HttpServletRequest request,String id,RedirectAttributesModelMap modelMap){
+		String pageNo = request.getParameter("pageNo");
+		ObjectId _id =new ObjectId(id);
+		Categories  categories = categorieServiceImp.findByOBjId(_id);
+		modelMap.addFlashAttribute("categorie.title",categories.getTitle());
+		return "redirect:/categorieController/list_categorie.do?pageNo="
+		+pageNo+"&title="+categories.getTitle()+"&visible="+categories.getVisible()
+		+"&description="+categories.getDescription();
 		
-		return null;
-		
+	}*/
+	
+	@RequestMapping("delete_categorie")
+	public String delete_categorie(String id){
+		ObjectId _id = new ObjectId(id);
+		categorieServiceImp.deleteByOBjId(_id);
+		return "redirect:/categorieController/list_categorie.do";
 	}
 	/**
 	 * 显示分类
 	 */
 	@RequestMapping("/list_categorie.do")
-	public String list_categorie(Model model){
+	public String list_categorie(Model model,HttpServletRequest request,HttpServletResponse response){
+		String pageNum = request.getParameter("pageNo");
+		int pageNo = 1;
+		if(StringUtils.isNotBlank(pageNum)){
+			pageNo = Integer.parseInt(pageNum);
+		}
 		Categories cs = new Categories();
 		String userName = UserUtils.getCurrentLoginName();
 		User user = userService.getUserByEmail(userName);
 		cs.setUid(user.get_id());
 		Query query = new Query(Criteria.where("uid").is(user.get_id()));
-		Page<Categories> page = categorieServiceImp.listCategories(1, query);
+		Page<Categories> page = categorieServiceImp.listCategories(pageNo, query);
 		model.addAttribute("page", page);
-		return "/back/categorie_list.jsp";
+		return "/author/categorie/categorie_list.jsp";
 	}	
 }

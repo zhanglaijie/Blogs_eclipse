@@ -19,12 +19,11 @@
         
          <security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>  
           <security:intercept-url pattern="/admin/*/*" access="hasRole('ROLE_ADMIN')"/>  
+          <security:intercept-url pattern="/author/*" access="hasRole('ROLE_USER')"/>
+           <security:intercept-url pattern="/author/*/*" access="hasRole('ROLE_USER')"/> 
         <!-- 文章操作 -->
-        <security:intercept-url pattern="/postsController/listPosts.do" access="hasRole('ROLE_USER')"/>
-        <security:intercept-url pattern="/postsController/createPost.do" access="hasRole('ROLE_USER')"/>
-        <security:intercept-url pattern="/postsController/createPostNavigation.do" access="hasRole('ROLE_USER')"/>
-        <security:intercept-url pattern="/categorieController/create_categorie.do" access="hasRole('ROLE_USER')"/>
-        <security:intercept-url pattern="/categorieController/list_categorie.do" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/postsController/*" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/categorieController/*" access="hasRole('ROLE_USER')"/>
         
         <!-- 个人中心 default-target-url="/postsController/listPosts.do" -->
         <security:intercept-url pattern="/userController/about_me.do" access="hasRole('ROLE_USER')"/>

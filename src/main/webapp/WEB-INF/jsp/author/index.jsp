@@ -23,42 +23,10 @@
 			<nav class="navbar mynav navbar-fixed-top" role="navigation">
 				<div class="navbar-header">
 					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="${ctx}/postsController/listPosts.do">壹博客</a>
+						<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="${ctx}/author/index">壹博客</a>
 				</div>
 				
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav" style="display: none;">
-						<li class="active">
-							 <a href="#">Link</a>
-						</li>
-						<li>
-							 <a href="#">Link</a>
-						</li>
-						<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
-							<ul class="dropdown-menu">
-								<li>
-									 <a href="#">Action</a>
-								</li>
-								<li>
-									 <a href="#">Another action</a>
-								</li>
-								<li>
-									 <a href="#">Something else here</a>
-								</li>
-								<li class="divider">
-								</li>
-								<li>
-									 <a href="#">Separated link</a>
-								</li>
-								<li class="divider">
-								</li>
-								<li>
-									 <a href="#">One more separated link</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
 					<form class="navbar-form navbar-left" role="search" style="display: none;">
 						<div class="form-group">
 							<input type="text" class="form-control" />
@@ -67,7 +35,8 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								 <sec:authentication property="name"></sec:authentication>
+								<%--  <sec:authentication property="name"></sec:authentication> --%>
+								<c:out value="${nickname}"></c:out>
 								 <strong class="caret"></strong>
 							 </a>
 							<ul class="dropdown-menu">
@@ -110,10 +79,10 @@
 					</h3>
 				</div>
 					<div class="panel-body">
-					<a href="${ctx}/postsController/listPosts.do">我的随笔</a>
+					<a class="post_list">我的随笔</a>
 				</div>
 				<div class="panel-body">
-					<a href="${ctx}/postsController/createPostNavigation.do">添加新随笔</a>
+					<a class="add_post">添加新随笔</a>
 				</div>
 				<div class="panel-body">
 					<a class="draft">草稿箱</a>
@@ -128,27 +97,13 @@
 					博客搬家
 				</div>
 				<div class="panel-body">
-					<a href="${ctx}/categorieController/list_categorie.do">[编辑分类]</a>
+					<a class="categorie">编辑分类</a>
 				</div>
 			</div>
 	<!-- 导航结束 -->
 		</div>
 		<div class="col-md-10 column mycontent">
-			<div class="tabbable" id="tabs-547795">
-				<ul class="nav nav-tabs">
-					<li class="active">
-						 <a href="#panel-l1" data-toggle="tab">随笔管理</a>
-					</li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="panel-l1">
-						 <iframe id="menuFrame" name="menuFrame" src="${ctx}/postsController/listDrafts.do" style="overflow:visible;" scrolling="yes" frameborder="no" height="100%" width="100%"></iframe>
-						<%-- <!--正文—左侧导航栏start-->
-						<%@include file="./common/post_list.jsp" %> --%>
-					</div>
-				</div>
-			</div>
-		</div>
+			<iframe id="menuFrame" name="menuFrame" src="${ctx}/postsController/listPosts.do" style="overflow:hidden;" scrolling="yes" frameborder="no" height="100%" width="100%"></iframe>
 	</div>
 </div>
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -159,8 +114,18 @@
   	<script type="text/javascript">
   	$(function(){
   		$(".draft").click(function(){
-  			alert('href="${ctx}/postsController/listDrafts.do"');
+  			$("#menuFrame").attr("src","${ctx}/postsController/listDrafts.do");
   		});
+  		$(".add_post").click(function(){
+  			$("#menuFrame").attr("src","${ctx}/postsController/createPostNavigation.do");
+  		});
+  		$(".post_list").click(function(){
+  			$("#menuFrame").attr("src","${ctx}/postsController/listPosts.do");
+  		});
+  		$(".categorie").click(function(){
+  			//
+  			$("#menuFrame").attr("src","${ctx}/categorieController/list_categorie.do");
+  		})
   	})
   	</script>
   </body>

@@ -43,4 +43,12 @@ public class PostsServiceImpl extends BasicService<Posts> implements PostsServic
 	protected  Class<Posts> getEntityClass(){
 		return Posts.class;
 	}
+	@Override
+	public void changeStatus(String _id, int status) {
+		Query query = new Query();  
+        query.addCriteria(Criteria.where("_id").is(_id));  
+        Posts post = mongoTemplate.findOne(query,getEntityClass());  
+        post.setStatus(status);
+        mongoTemplate.save(post);
+	}
 }

@@ -42,7 +42,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         }  
         for (GrantedAuthority auth : authCollection) {  
           if(auth.getAuthority().equals("ROLE_USER")){
-        	  url="/postsController/listPosts.do";
+        	  url="/author/index";
           }else{
         	  url="/admin/index";
           }
