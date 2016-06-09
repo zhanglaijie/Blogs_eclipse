@@ -22,6 +22,7 @@ public class AuthorManageController {
 		String email = UserUtils.getCurrentLoginName();
 		User user = userService.getUserByEmail(email);
 		map.put("nickname", user.getNicename());
+		map.put("blogaddress", user.getBlogaddress());
 		return "author/index.jsp";
 	} 
 	

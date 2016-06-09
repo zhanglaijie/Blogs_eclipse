@@ -60,6 +60,7 @@ public class AdminController {
 		userService.updateUserByObjId(user);
 		return "redirect:/admin/userList";
 	}
+	
 	@RequestMapping("/index")
 	public String index(Model model){
 		String username = UserUtils.getCurrentLoginName();

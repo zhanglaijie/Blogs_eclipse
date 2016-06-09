@@ -1,5 +1,6 @@
 package top.laijie.blogs.service.impl;
 
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,21 @@ public class CategorieServiceImp extends BasicService<Categories> implements Cat
 		return this.getPage(pageNo, PAGE_SIZE, query);
 	}
 	
+	@Override
+	public Categories save(Categories categories){
+		return super.save(categories);
+	}
+	
 	protected  Class<Categories> getEntityClass(){
 		return Categories.class;
+	}
+
+	@Override
+	public void updateUserByObjId(Categories categories) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("_id").is(categories.get_id()));
+		Categories categories2 = mongoTemplate.findOne(query, getEntityClass());
+		categories2.setVisible(categories.getVisible());
+		mongoTemplate.save(categories2);
 	}
 }

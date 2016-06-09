@@ -14,11 +14,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import top.laijie.blogs.domain.Categories;
 import top.laijie.blogs.domain.User;
-import top.laijie.blogs.service.impl.CategorieServiceImp;
+import top.laijie.blogs.service.CategorieService;
 import top.laijie.blogs.service.impl.UserServiceImpl;
 import top.laijie.blogs.tool.Page;
 import top.laijie.blogs.tool.UserUtils;
@@ -28,7 +27,7 @@ import top.laijie.blogs.tool.UserUtils;
 public class CategorieController {
 	private static Logger logger = Logger.getLogger(IndexPageController.class.getName());
 	@Resource  
-	private CategorieServiceImp categorieServiceImp;
+	private CategorieService categorieService;
 	@Autowired  
     UserServiceImpl userService;   
 	@RequestMapping("/create_categorie.do")
@@ -43,7 +42,7 @@ public class CategorieController {
 		categories.setTitle(title);
 		categories.setVisible(visible);
 		categories.setDescription(description);
-		categorieServiceImp.save(categories);
+		categorieService.save(categories);
 		logger.info(categories);
 	    return "redirect:/categorieController/list_categorie.do";
 	}
@@ -52,7 +51,7 @@ public class CategorieController {
 	public String to_edit_categorie(HttpServletRequest request,String id,RedirectAttributesModelMap modelMap){
 		String pageNo = request.getParameter("pageNo");
 		ObjectId _id =new ObjectId(id);
-		Categories  categories = categorieServiceImp.findByOBjId(_id);
+		Categories  categories = categorieService.findByOBjId(_id);
 		modelMap.addFlashAttribute("categorie.title",categories.getTitle());
 		return "redirect:/categorieController/list_categorie.do?pageNo="
 		+pageNo+"&title="+categories.getTitle()+"&visible="+categories.getVisible()
@@ -63,7 +62,7 @@ public class CategorieController {
 	@RequestMapping("delete_categorie")
 	public String delete_categorie(String id){
 		ObjectId _id = new ObjectId(id);
-		categorieServiceImp.deleteByOBjId(_id);
+		categorieService.deleteByOBjId(_id);
 		return "redirect:/categorieController/list_categorie.do";
 	}
 	/**
@@ -81,8 +80,18 @@ public class CategorieController {
 		User user = userService.getUserByEmail(userName);
 		cs.setUid(user.get_id());
 		Query query = new Query(Criteria.where("uid").is(user.get_id()));
-		Page<Categories> page = categorieServiceImp.listCategories(pageNo, query);
+		Page<Categories> page = categorieService.listCategories(pageNo, query);
 		model.addAttribute("page", page);
 		return "/author/categorie/categorie_list.jsp";
-	}	
+	}
+	
+	@RequestMapping("/changeStatus")
+	public String changeStatus(Model model,int status,String id){
+		ObjectId _id = new ObjectId(id);
+		Categories categories = new Categories();
+		categories.set_id(_id);
+		categories.setVisible(status);
+		categorieService.updateUserByObjId(categories);
+		return "redirect:/categorieController/list_categorie.do";
+	}
 }

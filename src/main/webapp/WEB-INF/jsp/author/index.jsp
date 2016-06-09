@@ -57,7 +57,7 @@
 							</ul>
 						</li>
 						<li>
-							 <a class="myblog" href="${ctx}/${user.blogaddress}">我的博客</a>
+							 <a class="myblog" href="${ctx}/${blogaddress}">我的博客</a>
 						</li>
 						<li>
 							 &nbsp;&nbsp;&nbsp;&nbsp;

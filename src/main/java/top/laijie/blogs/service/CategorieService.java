@@ -1,5 +1,6 @@
 package top.laijie.blogs.service;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.Query;
 
 import top.laijie.blogs.domain.Categories;
@@ -10,4 +11,10 @@ public interface CategorieService {
 	public void createCategories(Categories categories);
 
 	Page<Categories> listCategories(int pageNo, Query query);
+
+	public Categories save(Categories categories);
+
+	public void deleteByOBjId(ObjectId _id);
+
+	public void updateUserByObjId(Categories categories);
 }

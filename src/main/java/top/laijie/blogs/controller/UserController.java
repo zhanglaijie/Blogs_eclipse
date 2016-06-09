@@ -1,6 +1,7 @@
 package top.laijie.blogs.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -136,12 +137,9 @@ public class UserController {
      * @return 
      */  
     @RequestMapping(value = "/denied", method = RequestMethod.GET)  
-    public String getDeniedPage() {  
-  
-        logger.info("Received request to show denied page");  
-  
-        return "/authority/deniedpage.jsp";  
-  
+    public String getDeniedPage(ModelMap map) {  
+    	map.put("message", "您没有权限访问该页面，请重新登陆~~~");
+    	return "/error/error_page.jsp";
     }  
     /**
      * About_me

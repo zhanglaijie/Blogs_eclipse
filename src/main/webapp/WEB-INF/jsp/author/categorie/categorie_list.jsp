@@ -26,7 +26,8 @@
 					<thead>
 						<tr>
 							<th>分类</th>
-							<th>是否可见</th>
+							<th>状态</th>
+							<th>描述</th>
 							<th>操作</th>
 							<th>操作</th>
 						</tr>
@@ -43,7 +44,21 @@
 							</td>
 							<td><c:out value="${categories.description}" /></td>
 						<%-- 	<td><a href="${ctx}/categorieController/to_edit_categorie?id=${categories._id}&pageNo=${page.pageNo}"">编辑</a></td> --%>
-							<td><a href="${ctx}/categorieController/delete_categorie?id=${categories._id}">删除</a></td>
+							<td>
+								<c:choose>
+									<c:when test="${categories.visible == '0'}">
+										<button type="button" class="btn btn-default btn-info btn-sm" 
+										onclick="window.location='${ctx}/categorieController/changeStatus?status=1&id=${categories._id}'">隐藏</button>
+									</c:when>
+									<c:when test="${categories.visible == '1'}"><button type="button" class="btn btn-default btn-warning  btn-sm" 
+									onclick="window.location='${ctx}/categorieController/changeStatus?status=0&id=${categories._id}'">显示</button></c:when>
+								</c:choose>
+							</td>
+							<td>
+								<button type="button" id="deleteOne" class="btn btn-default btn-danger  btn-sm" 
+								onclick="deleteOne('${categories._id}');">删除</button>
+							<%-- <a href="${ctx}/categorieController/delete_categorie?id=${categories._id}">删除</a> --%>
+							</td>
 						</tr>
 						</c:forEach>
 					</tbody>
@@ -159,5 +174,14 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="${ctx}/validator/vendor/bootstrap/js/bootstrap.min.js"></script>
   	<script type="text/javascript" src="${ctx}/validator/dist/js/bootstrapValidator.js"></script>
+  	<script type="text/javascript">
+
+		function deleteOne(obj){
+			 var result = confirm('是否删除~~~');  
+			    if(result){  
+			    	window.location='${ctx}/categorieController/delete_categorie?id='+obj; 
+			    }
+		};
+</script>
   </body>
 </html>
