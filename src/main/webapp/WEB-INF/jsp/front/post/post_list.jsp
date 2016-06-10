@@ -24,7 +24,7 @@
 				摘要: <c:out value="${post.excerpt}"></c:out>
 				 <a class="btn btn-link" href="${ctx}/${name}/p/detail.htm?id=${post._id}">文章详情»</a>
 			</p>
-			<div class="postDesc" style="color:#bcbcbc;">posted <fmt:formatDate value="${post.postdate}" pattern="yyyy-MM-dd HH:mm" /> 阅读(9) 评论(0)  <!-- <a rel="nofollow">编辑</a> --></div>
+			<div class="postDesc" style="color:#bcbcbc;">posted <fmt:formatDate value="${post.postdate}" pattern="yyyy-MM-dd HH:mm" /> 阅读(<c:out value="${post.read_count}"></c:out>) 评论(0)  <!-- <a rel="nofollow">编辑</a> --></div>
 			<div style="clear: both; margin-bottom: 20px;"></div>
 			<div style="border-top: 1px dashed #169fe6;"></div>
 		</c:forEach>

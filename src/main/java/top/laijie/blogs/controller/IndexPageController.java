@@ -20,6 +20,7 @@ import top.laijie.blogs.domain.Categories;
 import top.laijie.blogs.domain.Posts;
 import top.laijie.blogs.domain.User;
 import top.laijie.blogs.service.CategorieService;
+import top.laijie.blogs.service.PostsService;
 import top.laijie.blogs.service.impl.PostsServiceImpl;
 import top.laijie.blogs.service.impl.UserServiceImpl;
 import top.laijie.blogs.tool.Page;
@@ -37,7 +38,7 @@ public class IndexPageController {
 	 private UserServiceImpl userService;   
 	 
 	 @Autowired  
-	 private PostsServiceImpl postService;
+	 private PostsService postService;
 	 
 	 @Autowired
 	 private CategorieService categorieService;
@@ -89,8 +90,8 @@ public class IndexPageController {
 	 public String postDetail(String id,ModelMap map){
 	 	//System.out.println(id);
 		 ObjectId _id = new ObjectId(id);
+	 	 postService.changereadNum(_id, true);
 	 	 Posts post = postService.findByOBjId(_id);
-	 	 postService.changeStatus(_id, status);
 	 	 map.put("post", post);
 		 return "/front/post/post_detail.jsp";
 	 }

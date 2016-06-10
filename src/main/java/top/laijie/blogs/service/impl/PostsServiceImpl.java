@@ -51,4 +51,13 @@ public class PostsServiceImpl extends BasicService<Posts> implements PostsServic
         post.setStatus(status);
         mongoTemplate.save(post);
 	}
+	public void changereadNum(ObjectId _id, boolean b) {
+		if(b){
+			Query query = new Query();  
+	        query.addCriteria(Criteria.where("_id").is(_id));  
+	        Posts post = mongoTemplate.findOne(query,getEntityClass());  
+	        post.setRead_count(post.getRead_count()+1);
+	        mongoTemplate.save(post);
+		}
+	}
 }

@@ -25,7 +25,7 @@
 					<button type="button" class="btn btn-default btn-danger">关注我</button>
 					<button type="button" class="btn btn-default btn-warning">收藏该文</button>
 				</div>
-					<div class="postDesc" style="color:#bcbcbc;">posted <fmt:formatDate value="${post.postdate}" pattern="yyyy-MM-dd HH:mm" /> 阅读(9) 评论(0)  <!-- <a rel="nofollow">编辑</a> --></div>
+					<div class="postDesc" style="color:#bcbcbc;">posted <fmt:formatDate value="${post.postdate}" pattern="yyyy-MM-dd HH:mm" /> 阅读(<c:out value="${post.read_count}"></c:out>) 评论(0)  <!-- <a rel="nofollow">编辑</a> --></div>
 			</div> 
 		</div>
 	</div>
