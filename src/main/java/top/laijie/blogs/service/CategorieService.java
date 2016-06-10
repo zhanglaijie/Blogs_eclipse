@@ -17,4 +17,6 @@ public interface CategorieService {
 	public void deleteByOBjId(ObjectId _id);
 
 	public void updateUserByObjId(Categories categories);
+
+	public void updateCount(ObjectId categorieId);
 }

@@ -33,13 +33,14 @@
                 authentication-failure-url="/userController/login.do?error=true"
                 authentication-success-handler-ref="myAuthenticationSuccessHandler"
          />  
-          
         <security:logout   
                 invalidate-session="true"   
                 logout-success-url="/userController/login.do"   
                 logout-url="/userController/logout.do"/>  
     </security:http>  
-        
+    
+    
+    
     <!-- 指定一个自定义的authentication-manager :customUserDetailsService -->  
     <security:authentication-manager>  
             <security:authentication-provider user-service-ref="customUserDetailsService">  

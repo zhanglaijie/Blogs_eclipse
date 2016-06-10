@@ -60,4 +60,14 @@ public class PostsServiceImpl extends BasicService<Posts> implements PostsServic
 	        mongoTemplate.save(post);
 		}
 	}
+	@Override
+	public void changeCommentNum(ObjectId postId, boolean b) {
+		if(b){
+			Query query = new Query();  
+	        query.addCriteria(Criteria.where("_id").is(postId));  
+	        Posts post = mongoTemplate.findOne(query,getEntityClass());  
+	        post.setComment_count(post.getComment_count()+1);
+	        mongoTemplate.save(post);
+		}
+	}
 }

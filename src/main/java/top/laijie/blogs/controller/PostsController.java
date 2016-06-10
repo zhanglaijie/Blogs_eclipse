@@ -66,6 +66,7 @@ public class PostsController {
 	 public String createPostNavigation(ModelMap map){
 		 User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
 		 Query query = new Query(Criteria.where("uid").is(user.get_id()));
+		 query.addCriteria(Criteria.where("visible").is(1));
 		 Page<Categories> categorie = categorieService.listCategories(1, query);
 		 map.addAttribute("categorie", categorie);
 		return "author/post/add_post.jsp";
@@ -90,6 +91,7 @@ public class PostsController {
 		posts.setTitle(repalce(title));
 		posts.setContent(repalce(content));
 		posts.setCategorieId(categorieId);
+		categorieService.updateCount(categorieId);
 		User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
 		if(excerpt!=null&&!excerpt.equals("")){
 			posts.setExcerpt(repalce(excerpt));

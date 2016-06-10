@@ -1,13 +1,19 @@
-package top.laijie.blogs.domain;
+package top.laijie.blogs.domain.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
 
+import top.laijie.blogs.domain.Comments;
+import top.laijie.blogs.domain.User;
 import top.laijie.blogs.tool.Basic;
 
-public class Comments extends Basic implements Serializable{
+public class CommentsDto extends Basic implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6423873700159310617L;
 	private ObjectId userId;
 	private ObjectId postId;
 	private String content;
@@ -16,6 +22,8 @@ public class Comments extends Basic implements Serializable{
 	private int status;
 	private Date createDate;
 	private Date replyDate;
+	
+	private User user;
 	public ObjectId getUserId() {
 		return userId;
 	}
@@ -58,8 +66,17 @@ public class Comments extends Basic implements Serializable{
 	public void setReplyDate(Date replyDate) {
 		this.replyDate = replyDate;
 	}
-	public Comments(ObjectId userId, ObjectId postId, String content, String replycontent, int status, Date createDate,
-			Date replyDate) {
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
+	public CommentsDto(ObjectId userId, ObjectId postId, String content, String replycontent, int status,
+			Date createDate, Date replyDate, User user) {
 		super();
 		this.userId = userId;
 		this.postId = postId;
@@ -68,15 +85,30 @@ public class Comments extends Basic implements Serializable{
 		this.status = status;
 		this.createDate = createDate;
 		this.replyDate = replyDate;
+		this.user = user;
 	}
-	public Comments() {
+	public static CommentsDto CommentsToDto(Comments comment) {
+		CommentsDto dto = new CommentsDto();
+		dto.set_id(comment.get_id());
+		dto.setPostId(comment.getPostId());
+		dto.setUserId(comment.getUserId());
+		dto.setContent(comment.getContent());
+		dto.setReplycontent(comment.getReplycontent());
+		dto.setStatus(comment.getStatus());
+		dto.setCreateDate(comment.getCreateDate());
+		dto.setReplyDate(comment.getReplyDate());
+		return dto;
+	}
+	
+	public CommentsDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public String toString() {
-		return "Comments [userId=" + userId + ", postId=" + postId + ", content=" + content + ", replycontent="
-				+ replycontent + ", status=" + status + ", createDate=" + createDate + ", replyDate=" + replyDate + "]";
+		return "CommentsDto [userId=" + userId + ", postId=" + postId + ", content=" + content + ", replycontent="
+				+ replycontent + ", status=" + status + ", createDate=" + createDate + ", replyDate=" + replyDate
+				+ ", user=" + user + "]";
 	}
 	
 }

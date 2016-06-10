@@ -52,7 +52,7 @@
 					</div>
 					<div class="col-md-7 column" style="border: 1px solid #169fe6;background-color: #fff; margin-top: 30px;">
 						<iframe src="${ctx}/post/${user.blogaddress}" id="iframepage" frameborder="0" scrolling="no" 
-						marginheight="0" marginwidth="0" onLoad="iFrameHeight()"></iframe>	
+						marginheight="0" marginwidth="0" onload='IFrameReSize("iframepage");IFrameReSizeWidth("iframepage");' width="700px"></iframe>
 					</div>
 					<div class="col-md-4 column">
 						
@@ -64,16 +64,34 @@
 							</div>
 							<div class="panel-body" >
 								<p>昵称：<c:out value="${user.nicename}"/></p>
-								<p>园龄：7个月</p>
+								<p>园龄：<c:out value="${old}"></c:out></p>
 								<p>关注：0人</p>
 								<p>粉丝：2人</p>
 							</div>
 						</div>
-						
+						<div class="panel panel-primary" style="top: 30px; position: relative;">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									搜索
+								</h3>
+							</div>
+							<div class="panel-body" >
+								<div class="form-horizontal" >
+									<div class="form-group">
+										<div class="col-sm-7 col-sm-offset-1">
+											<input type="text" class="form-control" id="title" name="title" placeholder="标题"/>
+										</div>
+										<div class="col-sm-2">
+											 <button onclick="getPostListByTitle();" type="button" class="btn btn-default">给我搜</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="list-group" style="top: 30px; position: relative;">
 							 <a href="#" class="list-group-item active">随笔分类</a>
 							<c:forEach items="${cateList}" var="categories" varStatus="status">
-								<div class="list-group-item">
+								<div class="list-group-item" onclick="getPostListByCate('${categories._id}');">
 								 	<span class="badge"><c:out value="${categories.count}"></c:out></span>
 								 	<c:out value="${categories.title}"></c:out>
 								</div>
@@ -111,14 +129,47 @@
     <script src="${ctx}/validator/vendor/bootstrap/js/bootstrap.min.js"></script>
   	<script type="text/javascript" src="${ctx}/validator/dist/js/bootstrapValidator.js"></script>
   	<script type="text/javascript">   
-	function iFrameHeight() {   
+	/* function iFrameHeight() {   
 		var ifm= document.getElementById("iframepage");   
 		var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;   
 		if(ifm != null && subWeb != null) {
 		   ifm.height = subWeb.body.scrollHeight;
 		   ifm.width = subWeb.body.scrollWidth;
 		}   
-	}   
+	}    */
+	//iframe高度自适应
+
+	function IFrameReSize(iframename) {
+		var pTar = document.getElementById(iframename);
+		if (pTar) {  //ff
+			if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight) {
+				pTar.height = pTar.contentDocument.body.offsetHeight;
+				} //ie
+				else if (pTar.Document && pTar.Document.body.scrollHeight) {
+					pTar.height = pTar.Document.body.scrollHeight;
+					}
+		}
+		}
+	
+	//iframe宽度自适应
+	function IFrameReSizeWidth(iframename) {
+		var pTar = document.getElementById(iframename);
+		if (pTar) {  //ff
+			if (pTar.contentDocument && pTar.contentDocument.body.offsetWidth) {
+				pTar.width = pTar.contentDocument.body.offsetWidth;
+				}  //ie
+				else if (pTar.Document && pTar.Document.body.scrollWidth) {
+					pTar.width = pTar.Document.body.scrollWidth;
+					}
+		}
+	}
+	function getPostListByCate(obj){
+		$("#iframepage").attr("src","${ctx}/post/${user.blogaddress}?cateId="+obj);
+	}
+	function getPostListByTitle(){
+		var title = $("#title").val();
+		$("#iframepage").attr("src","${ctx}/post/${user.blogaddress}?title="+title);
+	}
 	</script>
   </body>
 </html>

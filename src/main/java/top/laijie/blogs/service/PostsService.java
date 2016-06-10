@@ -1,15 +1,12 @@
 package top.laijie.blogs.service;
 
-import java.text.ParseException;
 import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.Query;
 
 import top.laijie.blogs.domain.Posts;
-import top.laijie.blogs.domain.User;
 import top.laijie.blogs.tool.Page;
-import top.laijie.blogs.tool.ServiceException;
 
 
 public interface PostsService{
@@ -30,5 +27,7 @@ public interface PostsService{
 	public Posts findByOBjId(ObjectId _id);
 
 	public void changereadNum(ObjectId _id, boolean b);
+
+	public void changeCommentNum(ObjectId postId, boolean b);
 }
 

@@ -1,5 +1,6 @@
 package top.laijie.blogs.service.impl;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -46,4 +47,14 @@ public class CategorieServiceImp extends BasicService<Categories> implements Cat
 		categories2.setVisible(categories.getVisible());
 		mongoTemplate.save(categories2);
 	}
+
+	@Override
+	public void updateCount(ObjectId categorieId) {
+		Query query = new Query();  
+        query.addCriteria(Criteria.where("_id").is(categorieId));  
+        Categories cate = mongoTemplate.findOne(query,getEntityClass());  
+        cate.setCount(cate.getCount()+1);
+        mongoTemplate.save(cate);
+	}
+
 }
