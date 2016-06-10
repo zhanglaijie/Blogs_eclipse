@@ -6,7 +6,9 @@ import java.util.Map;
   
 import javax.servlet.ServletException;  
 import javax.servlet.http.HttpServletRequest;  
-import javax.servlet.http.HttpServletResponse;  
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.Authentication;  
 import org.springframework.security.core.GrantedAuthority;  
 import org.springframework.security.core.authority.GrantedAuthorityImpl;  
@@ -42,7 +44,14 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         }  
         for (GrantedAuthority auth : authCollection) {  
           if(auth.getAuthority().equals("ROLE_USER")){
-        	  url="/author/index";
+        	  String ru = (String)request.getSession().getAttribute("ru");  
+              request.getSession().removeAttribute("ru");  
+              if(StringUtils.isNotEmpty(ru)){  
+            	  url=ru;
+                  //request.getRequestDispatcher(ru).forward(request, response);  
+              }else{  
+                 url="/author/index";  
+              }  
           }else{
         	  url="/admin/index";
           }

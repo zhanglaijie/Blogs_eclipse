@@ -42,7 +42,7 @@
 				<div style="padding: 10px 0;margin-bottom: 10px;margin-top: 10px;
 				border: silver 1px dashed;font-size: 12px;width: 270px;text-align: center;">
 					<button type="button" class="btn btn-default btn-info">好文要顶</button>
-					<button type="button" class="btn btn-default btn-danger">关注我</button>
+					<button onclick="followme('${post.uid}');" type="button" class="btn btn-default btn-danger">关注我</button>
 					<button type="button" class="btn btn-default btn-warning">收藏该文</button>
 				</div>
 				<div class="postDesc" style="color:#bcbcbc;">posted <fmt:formatDate value="${post.postdate}" pattern="yyyy-MM-dd HH:mm" /> 阅读(<c:out value="${post.read_count}"></c:out>) 评论(<c:out value="${post.comment_count}"></c:out>)  <!-- <a rel="nofollow">编辑</a> --></div>
@@ -93,6 +93,18 @@
 	function getPostListByTitle(){
 		var title = $("#title").val();
 		$("#iframepage").attr("src","${ctx}/post/${user.blogaddress}?title="+title);
+	}
+	
+	function followme(authorId){
+		$.ajax({
+			type:"POST",
+			url:"${ctx}/follow/create",
+			data:{'authorId':authorId},
+			dataType: 'json',
+			success:function(msg){
+				alert(msg.status);
+			}
+		});
 	}
 	</script>
   </body>

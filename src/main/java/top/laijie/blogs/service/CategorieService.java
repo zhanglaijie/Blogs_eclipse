@@ -19,4 +19,6 @@ public interface CategorieService {
 	public void updateUserByObjId(Categories categories);
 
 	public void updateCount(ObjectId categorieId);
+
+	Page<Categories> listCategories(int pageNo, int pageSize, Query query);
 }

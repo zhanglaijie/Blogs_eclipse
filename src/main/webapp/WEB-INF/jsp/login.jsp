@@ -54,7 +54,13 @@
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 										<label><div id="login-error">${error}</div></label>
-									
+								</div>
+							</div>
+							<div  class="form-group">
+								<div class="col-sm-offset-4 col-sm-8">
+									<div class="checkbox">
+										 <label><input type="checkbox" id="_spring_security_remember_me" name="_spring_security_remember_me"/>记住密码</label>
+									</div> 
 								</div>
 							</div>
 							<div class="form-group">

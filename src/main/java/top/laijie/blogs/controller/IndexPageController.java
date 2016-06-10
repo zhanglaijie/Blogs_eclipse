@@ -56,6 +56,7 @@ public class IndexPageController {
 	 @Autowired
 	 private CommentService commentService;
 	 
+	 //个人主页
 	 @RequestMapping(value="/{name}", method = {RequestMethod.GET})
 	public String getDetail(@PathVariable("name") String name,ModelMap map,HttpServletRequest request){
 		Query query = new Query();  
@@ -68,7 +69,7 @@ public class IndexPageController {
 	 		query2.addCriteria(Criteria.where("status").is(1)); 
 	 		Query query3 = new Query(Criteria.where("visible").is(0));
 	 		 query3.addCriteria(Criteria.where("uid").is(user.get_id()));
-	 		 Page<Categories> catelist = categorieService.listCategories(1, query3);
+	 		 Page<Categories> catelist = categorieService.listCategories(1,100,query3);
 	 		 map.addAttribute("cateList",catelist.getDatas());
 	    	 map.addAttribute("user", user);
 	    	 String old = DateUtils.timeDifference(new Date(), user.getRegisterTime());
@@ -168,7 +169,11 @@ public class IndexPageController {
 		 postService.changeCommentNum(comment.getPostId(), true);
 		 return "redirect:/comment/list?postId="+postId;
 	 };
-	 
+	 @RequestMapping("/comment/tocreate")
+	 public String tOcreateCommit(String postId){
+
+		 return "redirect:/comment/list?postId="+postId;
+	 };
 	 private String repalce(String string){
 		 SensitivewordFilter filter = new SensitivewordFilter();
 			return filter.replaceSensitiveWord(string,2,"*");

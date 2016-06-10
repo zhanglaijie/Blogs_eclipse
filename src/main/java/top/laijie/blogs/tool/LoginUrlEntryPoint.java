@@ -10,24 +10,35 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.RedirectUrlBuilder;
 
-public class LoginUrlEntryPoint implements AuthenticationEntryPoint{
+public class LoginUrlEntryPoint extends LoginUrlAuthenticationEntryPoint{
 
 	 private static final Log log = LogFactory.getLog(LoginUrlEntryPoint.class);
 
-	 
-
-	 @Override
-	 public void commence(HttpServletRequest request,HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-	
-		  String targetUrl = null;
-		  String url = request.getRequestURI();
-		  // 取得登陆前的url
-		  String refererUrl = request.getHeader("Referer");  
-		  // TODO 增加处理逻辑
-		  targetUrl = refererUrl;
-		  response.sendRedirect(targetUrl);
-
-	 }
+	 public void commence(HttpServletRequest request,  
+	            HttpServletResponse response, AuthenticationException authException)  
+	            throws IOException, ServletException {  
+	        String returnUrl = buildHttpReturnUrlForRequest(request);  
+	        request.getSession().setAttribute("ru", returnUrl);  
+	        super.commence(request, response, authException);  
+	    }  
+	  
+	    protected String buildHttpReturnUrlForRequest(HttpServletRequest request)  
+	            throws IOException, ServletException {  
+	  
+	  
+	        RedirectUrlBuilder urlBuilder = new RedirectUrlBuilder();  
+	        urlBuilder.setScheme("http");  
+	        urlBuilder.setServerName(request.getServerName());  
+	        urlBuilder.setPort(request.getServerPort());  
+	        urlBuilder.setContextPath(request.getContextPath());  
+	        urlBuilder.setServletPath(request.getServletPath());  
+	        urlBuilder.setPathInfo(request.getPathInfo());  
+	        urlBuilder.setQuery(request.getQueryString());  
+	  
+	        return urlBuilder.getUrl();  
+	    }  
 
 	}

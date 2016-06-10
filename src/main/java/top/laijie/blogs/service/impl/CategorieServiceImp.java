@@ -31,6 +31,10 @@ public class CategorieServiceImp extends BasicService<Categories> implements Cat
 	}
 	
 	@Override
+	public Page<Categories> listCategories(int pageNo,int pageSize,Query query){
+		return this.getPage(pageNo, pageSize, query);
+	}
+	@Override
 	public Categories save(Categories categories){
 		return super.save(categories);
 	}

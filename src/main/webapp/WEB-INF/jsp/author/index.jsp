@@ -71,7 +71,7 @@
 	</div>
 	<!-- 导航结束 -->
 	<div class="row clearfix from-top">
-		<div class="col-md-2 column left-nav">
+		<div class="col-md-2 column left-nav" style="    margin-top: 50px;">
 			<div class="panel panel-primary ">
 				<div class="panel-heading">
 					<h3 class="panel-title">
@@ -85,7 +85,7 @@
 					<a class="add_post">添加新随笔</a>
 				</div>
 				<div class="panel-body">
-					<a class="draft">草稿箱</a>
+					<a href="${ctx}/postsController/listDrafts.do" target="menuFrame">草稿箱</a>
 				</div>
 				<div class="panel-body">
 					博客签名
@@ -102,8 +102,9 @@
 			</div>
 	<!-- 导航结束 -->
 		</div>
-		<div class="col-md-10 column mycontent">
-			<iframe id="menuFrame" name="menuFrame" src="${ctx}/postsController/listPosts.do" style="overflow:hidden;" scrolling="yes" frameborder="no" height="100%" width="100%"></iframe>
+		<div class="col-md-10 column">
+			<iframe id="menuFrame" name="menuFrame" src="${ctx}/postsController/listPosts.do" style="overflow:hidden;" 
+			scrolling="yes" frameborder="no" width="100%" height="100%"></iframe>
 	</div>
 </div>
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -127,6 +128,33 @@
   			$("#menuFrame").attr("src","${ctx}/categorieController/list_categorie.do");
   		})
   	})
+  	
+  		//iframe高度自适应
+
+	function IFrameReSize(iframename) {
+		var pTar = document.getElementById(iframename);
+		if (pTar) {  //ff
+			if (pTar.contentDocument && pTar.contentDocument.body.offsetHeight) {
+				pTar.height = pTar.contentDocument.body.offsetHeight;
+				} //ie
+				else if (pTar.Document && pTar.Document.body.scrollHeight) {
+					pTar.height = pTar.Document.body.scrollHeight;
+					}
+		}
+		}
+	
+	//iframe宽度自适应
+	function IFrameReSizeWidth(iframename) {
+		var pTar = document.getElementById(iframename);
+		if (pTar) {  //ff
+			if (pTar.contentDocument && pTar.contentDocument.body.offsetWidth) {
+				pTar.width = pTar.contentDocument.body.offsetWidth;
+				}  //ie
+				else if (pTar.Document && pTar.Document.body.scrollWidth) {
+					pTar.width = pTar.Document.body.scrollWidth;
+					}
+		}
+	}
   	</script>
   </body>
 </html>

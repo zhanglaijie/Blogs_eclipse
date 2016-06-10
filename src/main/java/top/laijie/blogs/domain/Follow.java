@@ -12,10 +12,12 @@ import top.laijie.blogs.tool.Basic;
  *
  */
 public class Follow extends Basic implements Serializable{
+	//作者Id
 	private ObjectId authorUid;
 	private ObjectId followerUid;
+	//0-no 1-yes
+	private int status;
 	private Date createDate;
-	private int status=1;
 	public ObjectId getAuthorUid() {
 		return authorUid;
 	}
