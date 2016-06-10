@@ -51,8 +51,92 @@
 					<div class="col-md-1 column">
 					</div>
 					<div class="col-md-7 column" style="border: 1px solid #169fe6;background-color: #fff; margin-top: 30px;">
-						<iframe src="${ctx}/post/${user.blogaddress}" id="iframepage" frameborder="0" scrolling="no" 
-						marginheight="0" marginwidth="0" onLoad="iFrameHeight()"></iframe>	
+						<c:forEach items="${postPage.datas}" var="post" varStatus="status">
+							<h3>
+								<c:out value="${post.title}"></c:out>
+							</h3>
+							<p>
+								摘要: <c:out value="${post.excerpt}"></c:out>
+								 <a class="btn btn-link" href="#">文章详情»</a>
+							</p>
+							<div class="postDesc" style="color:#bcbcbc;">posted @ 2016-03-22 15:04 Me 阅读(9) 评论(0)  <a rel="nofollow">编辑</a></div>
+							<div style="clear: both; margin-bottom: 20px;"></div>
+							<div style="border-top: 1px dashed #169fe6;"></div>
+						</c:forEach>
+						<ul class="pagination mypage">
+	
+							<li><a href="${ctx}/${user.blogaddress}?pageNo=1">首页</a></li>
+						
+							<c:choose>
+								<c:when test="${postPage.pageNo!= '1'}">
+									<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo-1}"/>">上一页</a></li>
+								</c:when>
+								<c:when test="${postPage.pageNo== '1'}">
+									<!-- <li class="disabled"><a>上一页</a></li> -->	
+								</c:when>
+							</c:choose>
+							<c:choose>
+								<c:when test="${postPage.pageNo-4>='1'}">
+									<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo-4}"/>">
+										<c:out value="${postPage.pageNo-4}"/></a></li>
+								</c:when>
+							</c:choose>
+							<c:choose>
+								<c:when test="${postPage.pageNo-3>='1'}">
+									<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo-3}"/>">
+										<c:out value="${postPage.pageNo-3}"/></a></li>
+								</c:when>
+							</c:choose>
+							<c:choose>
+								<c:when test="${postPage.pageNo-2>='1'}">
+									<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo-2}"/>">
+										<c:out value="${postPage.pageNo-2}"/></a></li>
+								</c:when>
+							</c:choose>
+							<c:choose>
+								<c:when test="${postPage.pageNo-1>='1'}">
+									<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo-1}"/>">
+										<c:out value="${postPage.pageNo-1}"/></a></li>
+								</c:when>
+							</c:choose>
+							<li class="active"><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo}"/>">
+								<c:out value="${postPage.pageNo}"/></a></li>
+								
+							<c:choose>
+								<c:when test="${postPage.pageNo+1<=postPage.totalPage}">
+									<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo+1}"/>">
+										<c:out value="${postPage.pageNo+1}"/></a></li>
+								</c:when>
+							</c:choose>
+							<c:choose>
+								<c:when test="${postPage.pageNo+2<=postPage.totalPage}">
+									<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo+2}"/>">
+										<c:out value="${postPage.pageNo+2}"/></a></li>
+								</c:when>
+							</c:choose>	
+							<c:choose>
+								<c:when test="${postPage.pageNo+3<=postPage.totalPage}">
+									<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo+3}"/>">
+										<c:out value="${postPage.pageNo+3}"/></a></li>
+								</c:when>
+							</c:choose>	
+							<c:choose>
+								<c:when test="${postPage.pageNo+4<=postPage.totalPage}">
+									<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo+4}"/>">
+										<c:out value="${postPage.pageNo+4}"/></a></li>
+								</c:when>
+							</c:choose>	
+							<c:choose>	
+								<c:when test="${postPage.pageNo != postPage.totalPage}">
+										<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.pageNo+1}"/>">下一页</a></li>
+								</c:when>
+								<c:when test="${postPage.pageNo == postPage.totalPage}">
+										<!-- <li class="disabled"><a>下一页</a></li> -->
+								</c:when>
+							</c:choose>
+							
+							<li><a href="${ctx}/${user.blogaddress}?pageNo=<c:out value="${postPage.totalPage}"/>">尾页</a></li>
+						</ul>
 					</div>
 					<div class="col-md-4 column">
 						
@@ -110,15 +194,5 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="${ctx}/validator/vendor/bootstrap/js/bootstrap.min.js"></script>
   	<script type="text/javascript" src="${ctx}/validator/dist/js/bootstrapValidator.js"></script>
-  	<script type="text/javascript">   
-	function iFrameHeight() {   
-		var ifm= document.getElementById("iframepage");   
-		var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;   
-		if(ifm != null && subWeb != null) {
-		   ifm.height = subWeb.body.scrollHeight;
-		   ifm.width = subWeb.body.scrollWidth;
-		}   
-	}   
-	</script>
   </body>
 </html>
