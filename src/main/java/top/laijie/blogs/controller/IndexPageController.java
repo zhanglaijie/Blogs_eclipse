@@ -90,7 +90,8 @@ public class IndexPageController {
 	 	//System.out.println(id);
 		 ObjectId _id = new ObjectId(id);
 	 	 Posts post = postService.findByOBjId(_id);
+	 	 postService.changeStatus(_id, status);
 	 	 map.put("post", post);
-		 return "/front/post.jsp";
+		 return "/front/post/post_detail.jsp";
 	 }
 }

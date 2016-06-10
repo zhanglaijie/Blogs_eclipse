@@ -33,6 +33,7 @@ import top.laijie.blogs.service.UserService;
 import top.laijie.blogs.service.impl.PostsServiceImpl;
 import top.laijie.blogs.service.impl.UserServiceImpl;
 import top.laijie.blogs.tool.CookieTool;
+import top.laijie.blogs.tool.HTMLSpirit;
 import top.laijie.blogs.tool.Page;
 import top.laijie.blogs.tool.UserUtils;
 /**
@@ -93,10 +94,11 @@ public class PostsController {
 		if(excerpt!=null&&!excerpt.equals("")){
 			posts.setExcerpt(repalce(excerpt));
 		}else{
-			if(content.length()>150){
-				posts.setExcerpt(repalce(content.substring(0, 150)));
+			String contentWithutHTML = HTMLSpirit.delHTMLTag(content);
+			if(contentWithutHTML.length()>150){
+				posts.setExcerpt(repalce(contentWithutHTML.substring(0, 150)));
 			}else{
-				posts.setExcerpt(repalce(content));
+				posts.setExcerpt(repalce(contentWithutHTML));
 			}
 			
 		}

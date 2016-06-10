@@ -30,7 +30,7 @@
 					<div class="col-md-5 column" style="padding-top:138px">
 						<ul class="nav nav-tabs">
 							<li class="active">
-								 <a href="#">首页</a>
+								 <a href="${ctx}/${user.blogaddress}">首页</a>
 							</li>
 							<li>
 								 <a href="${ctx}/postsController/createPostNavigation.do">新随笔</a>
