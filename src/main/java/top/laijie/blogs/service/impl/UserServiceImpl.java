@@ -228,5 +228,11 @@ import top.laijie.blogs.tool.ServiceException;
 			// TODO Auto-generated method stub
 			return this.findAll();
 		}
+
+
+		@Override
+		public void saveOne(User user) {
+			this.save(user);
+		}
 	}
 

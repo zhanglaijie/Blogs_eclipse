@@ -9,15 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.bson.json.JsonWriter;
-import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;  
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;  
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;  
+import org.springframework.web.servlet.ModelAndView;
 
+import top.laijie.blogs.domain.Follow;
 import top.laijie.blogs.domain.User;
+import top.laijie.blogs.service.FollowService;
+import top.laijie.blogs.service.UserService;
 import top.laijie.blogs.service.impl.UserServiceImpl;
 import top.laijie.blogs.tool.Page;
 import top.laijie.blogs.tool.StaticProperties;
@@ -28,8 +33,10 @@ import top.laijie.blogs.tool.UserUtils;
 public class UserController {  
 	private static Logger logger = Logger.getLogger(UserController.class.getName());     
     @Autowired  
-    UserServiceImpl userService;   
+    UserService userService;   
     
+    @Autowired
+    FollowService followService;
     /** 
      * 指向登录页面 
      */  
@@ -63,7 +70,7 @@ public class UserController {
     @RequestMapping("/save")  
     public String saveUser(User user){  
            
-    	userService.save(user); 
+    	userService.saveOne(user); 
            
         logger.info("save:"+user);   
         return "/back/index.jsp";
@@ -152,7 +159,7 @@ public class UserController {
     		user.setAlbum(StaticProperties.DEFAULT_ALBUM);
     	}
     	map.addAttribute("user",user);
-		return "/author/aboutme.jsp";
+		return "/author/me/aboutme.jsp";
     }
     /**
      * 完善资料
@@ -168,7 +175,7 @@ public class UserController {
     	user.setUsername(username);
     	user.setNicename(nicename);
     	user.setBlogsubname(blogsubname);
-    	userService.save(user);
+    	userService.saveOne(user);
     	
     	return "/login.jsp";
     }
@@ -186,7 +193,7 @@ public class UserController {
     	user2.setNicename(user.getNicename());
     	user2.setBlogsubname(user.getBlogsubname());
     	user2.setDescription(user.getDescription());
-    	userService.save(user2);
+    	userService.saveOne(user2);
 
     	return "redirect:/userController/about_me.do";
     }
@@ -204,8 +211,19 @@ public class UserController {
 		 String email = UserUtils.getCurrentLoginName();
 		 User user = userService.getUserByEmail(email);
 		 user.setDescription(description);
-		 userService.save(user);
+		 userService.saveOne(user);
 		 map.put("sign", user.getDescription());
 		 return "author/post/blogsign.jsp";
+	 }
+	 
+	 @RequestMapping("/myfollowed")
+	 public String myfollowed(ModelMap map){
+		 String email = UserUtils.getCurrentLoginName();
+		 User user = userService.getUserByEmail(email);
+		 Query query = new Query();
+		 query.addCriteria(Criteria.where("followerUid").is(user.get_id()));  
+		 Page<Follow> followPage = followService.listFollow(1, query);
+		 map.put("followPage", followPage);
+		 return "author/me/myfollowed.jsp";
 	 }
 }  

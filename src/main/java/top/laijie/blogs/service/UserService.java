@@ -45,5 +45,6 @@ public interface UserService{
 	public List<User> listUser();
 	public void DeleteOne(ObjectId _id);
 	void updateUserByObjId(User user);
+	void saveOne(User user);
 	
 }
