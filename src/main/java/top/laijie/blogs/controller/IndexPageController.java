@@ -146,8 +146,11 @@ public class IndexPageController {
 	 	 User user = userService.getUserByEmail(email);
 	 	 Query query2 = new Query(Criteria.where("authorUid").is(post.getUid()));
 	 	 query2.addCriteria(Criteria.where("followerUid").is(user.get_id())); 
+	 	
 	 	 Follow follow = followService.find(query2);
-	 	 if(follow!=null){
+	 	 if(post.getUid().equals(user.get_id())){
+		 		map.put("followed", "zero");
+		 }else if(follow!=null){
 	 		 map.put("followed", true);
 	 	 }else{
 	 		 map.put("followed", false);

@@ -146,6 +146,11 @@ public class Page<T> {
 		this.setTotalCount(totalCount2);
 		this.init();
 	}
+	
+	public Page() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * 初始化计算分页

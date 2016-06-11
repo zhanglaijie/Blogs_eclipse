@@ -60,7 +60,7 @@
 								 <a id="myfollowed" href="#panel-l2" onclick="" data-toggle="tab">我的订阅</a>
 							</li>
 							<li>
-								 <a href="#panel-l2" data-toggle="tab">我的粉丝</a>
+								 <a id="followedme" href="#panel-l2" data-toggle="tab">我的粉丝</a>
 							</li>
 							<li>
 								 <a href="#panel-l2" data-toggle="tab">账户设置</a>
@@ -111,84 +111,6 @@
 							<div class="tab-pane" id="panel-l2">
 									<iframe id="menuFrame" name="menuFrame"  style="overflow:hidden;" 
 										scrolling="yes" frameborder="no" width="100%" height="100%"></iframe>
-							</div>
-							<div class="tab-pane" id="panel-l3">
-								 <table class="table table-bordered table-hover table-condensed" style="margin-top: 25px">
-										<thead>
-											<tr>
-												<th>
-													序号
-												</th>
-												<th>
-													用户
-												</th>
-												<th>
-													邮箱
-												</th>
-												<th>
-													订阅时间
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>
-													1
-												</td>
-												<td>
-													方铁
-												</td>
-												<td>
-													fangtie@qq.com
-												</td>
-												<td>
-													02/04/2012
-												</td>
-											</tr>
-											<tr class="success">
-												<td>
-													2
-												</td>
-												<td>
-													SSK
-												</td>
-												<td>
-													ssk@qq.com
-												</td>
-												<td>
-													01/04/2012
-												</td>
-											</tr>
-											<tr class="warning">
-												<td>
-													3
-												</td>
-												<td>
-													周鑫
-												</td>
-												<td>
-													zhouxin@qq.com
-												</td>
-												<td>
-													03/04/2012
-												</td>
-											</tr>
-											<tr class="error">
-												<td>
-													4
-												</td>
-												<td>
-													蓝冰
-												</td>
-												<td>
-													lanbing@qq.com
-												</td>
-												<td>
-													02/04/2012
-												</td>
-											</tr>
-										</tbody>
-									</table>
 							</div>
 							<div class="tab-pane" id="panel-l4">
 								<form role="form" method="post"
@@ -251,6 +173,10 @@
  		
  		$("#myfollowed").click(function(){
 			$("#menuFrame").attr("src","${ctx}/userController/myfollowed");
+		})
+		
+		$("#followedme").click(function(){
+			$("#menuFrame").attr("src","${ctx}/userController/followedme");
 		})
  	});
  	function clickInput(){

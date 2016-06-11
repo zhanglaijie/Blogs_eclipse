@@ -31,4 +31,9 @@ public class FollowServiceImp extends BasicService<Follow> implements FollowServ
 	protected  Class<Follow> getEntityClass(){
 		return Follow.class;
 	}
+
+	@Override
+	public Page<Follow> listFollow(int i, int j, Query query) {
+		return this.getPage(i, j, query);
+	}
 }

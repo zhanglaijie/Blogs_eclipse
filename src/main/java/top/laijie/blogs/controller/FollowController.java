@@ -49,7 +49,6 @@ public class FollowController {
 			 if(email.equals("anonymousUser")){
 				 	writer.write("{\"status\":\"请先登陆，登陆后即可关注~~~\"}");
 			 	 }else{
-			 		 
 			 		User user = userService.getUserByEmail(email);
 			 		Follow fo = new Follow();
 					fo.setCreateDate(new Date());

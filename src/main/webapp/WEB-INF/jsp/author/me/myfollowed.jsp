@@ -26,6 +26,9 @@
 					用户
 				</th>
 				<th>
+					博客
+				</th>
+				<th>
 					邮箱
 				</th>
 				<th>
@@ -34,62 +37,25 @@
 			</tr>
 		</thead>
 		<tbody>
+			<c:forEach items="${dtolist}" var="follow" varStatus="status">
 			<tr>
 				<td>
-					1
+					<c:out value="${status.index + 1}"></c:out>
 				</td>
 				<td>
-					方铁
+					<c:out value="${follow.user.nicename}"></c:out>
 				</td>
 				<td>
-					fangtie@qq.com
+					<a href="${ctx}/${follow.user.blogaddress}" target="_black"><c:out value="${follow.user.blogname}"></c:out></a>
 				</td>
 				<td>
-					02/04/2012
+					<c:out value="${follow.user.email}"></c:out>
+				</td>
+				<td>
+					<fmt:formatDate value="${follow.createDate}" pattern="yyyy-MM-dd HH:mm" />
 				</td>
 			</tr>
-			<tr class="success">
-				<td>
-					2
-				</td>
-				<td>
-					SSK
-				</td>
-				<td>
-					ssk@qq.com
-				</td>
-				<td>
-					01/04/2012
-				</td>
-			</tr>
-			<tr class="error">
-				<td>
-					3
-				</td>
-				<td>
-					蓝冰
-				</td>
-				<td>
-					lanbing@qq.com
-				</td>
-				<td>
-					02/04/2012
-				</td>
-			</tr>
-			<tr class="warning">
-				<td>
-					4
-				</td>
-				<td>
-					周鑫
-				</td>
-				<td>
-					zhouxin@qq.com
-				</td>
-				<td>
-					03/04/2012
-				</td>
-			</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 </div>

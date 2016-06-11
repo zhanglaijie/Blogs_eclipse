@@ -12,4 +12,6 @@ public interface FollowService {
 	Page<Follow> listFollow(int pageNo,Query query);
 
 	Follow find(Query query);
+
+	public Page<Follow> listFollow(int i, int j, Query query);
 }

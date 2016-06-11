@@ -1,6 +1,8 @@
 package top.laijie.blogs.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import top.laijie.blogs.domain.Follow;
 import top.laijie.blogs.domain.User;
+import top.laijie.blogs.domain.dto.FollowDto;
 import top.laijie.blogs.service.FollowService;
 import top.laijie.blogs.service.UserService;
 import top.laijie.blogs.service.impl.UserServiceImpl;
@@ -222,8 +225,36 @@ public class UserController {
 		 User user = userService.getUserByEmail(email);
 		 Query query = new Query();
 		 query.addCriteria(Criteria.where("followerUid").is(user.get_id()));  
-		 Page<Follow> followPage = followService.listFollow(1, query);
-		 map.put("followPage", followPage);
+		 Page<Follow> followPage = followService.listFollow(1,1000,query);
+		 Page<FollowDto> dtoPage = new Page<>();
+		 List<FollowDto> dtolist = new ArrayList<>();
+		 for(Follow follow:followPage.getDatas()){
+			 FollowDto dto = FollowDto.followtoDto(follow);
+			 User user2 = userService.findByOBjId(follow.getAuthorUid());
+				dto.setUser(user2);
+				dtolist.add(dto);
+		 }
+		  map.addAttribute("dtolist", dtolist);
+		  
+		 return "author/me/myfollowed.jsp";
+	 }
+	 
+	 @RequestMapping("/followedme")
+	 public String followedme(ModelMap map){
+		 String email = UserUtils.getCurrentLoginName();
+		 User user = userService.getUserByEmail(email);
+		 Query query = new Query();
+		 query.addCriteria(Criteria.where("authorUid").is(user.get_id()));  
+		 Page<Follow> followPage = followService.listFollow(1,1000,query);
+		 List<FollowDto> dtolist = new ArrayList<>();
+		 for(Follow follow:followPage.getDatas()){
+			 FollowDto dto = FollowDto.followtoDto(follow);
+			 User user2 = userService.findByOBjId(follow.getFollowerUid());
+				dto.setUser(user2);
+				dtolist.add(dto);
+		 }
+		  map.addAttribute("dtolist", dtolist);
+		  
 		 return "author/me/myfollowed.jsp";
 	 }
 }  

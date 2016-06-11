@@ -33,15 +33,14 @@
 	</thead>
 	<tbody>
 		<c:forEach items="${postPage.datas}" var="post" varStatus="status">
-		<tr>
-			<td><c:out value="${post.title}" />（<fmt:formatDate value="${post.postdate}" pattern="yyyy-MM-dd HH:mm" />）</td>
-			
-			<td><c:out value="${post.read_count}" /></td>
-			<td><c:out value="${post.comment_count}" /></td>
-			<td><a href="${ctx}/postsController/modifyPostNavigation.do?_id=${post._id}">编辑</a></td>
-			<td><a href="${ctx}/postsController/changeStatus?_id=${post._id}&pageNo=${postPage.pageNo}&status=0">移至草稿箱</a></td>
-			<td><a href="${ctx}/postsController/deletePost.do?_id=${post._id}&pageNo=${postPage.pageNo}">删除</a></td>
-		</tr>
+			<tr>
+				<td><c:out value="${post.title}" />（<fmt:formatDate value="${post.postdate}" pattern="yyyy-MM-dd HH:mm" />）</td>
+				<td><c:out value="${post.read_count}" /></td>
+				<td><c:out value="${post.comment_count}" /></td>
+				<td><a href="${ctx}/postsController/modifyPostNavigation.do?_id=${post._id}">编辑</a></td>
+				<td><a href="${ctx}/postsController/changeStatus?_id=${post._id}&pageNo=${postPage.pageNo}&status=0">移至草稿箱</a></td>
+				<td><a href="${ctx}/postsController/deletePost.do?_id=${post._id}&pageNo=${postPage.pageNo}">删除</a></td>
+			</tr>
 		</c:forEach>
 	</tbody>
 </table>
