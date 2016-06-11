@@ -201,6 +201,26 @@ public class UserController {
     	return "redirect:/userController/about_me.do";
     }
     
+    @RequestMapping("/tomodifyInfo2.do")
+    public String tomodifyInfo2(ModelMap map){
+    	String loginName = UserUtils.getCurrentLoginName();
+    	User user2 = userService.getUserByEmail(loginName);
+    	map.put("username", user2.getUsername());
+    	map.put("email",user2.getEmail());
+    	return "/author/me/passportSetting.jsp";
+    }
+    
+    @RequestMapping("/modifyInfo2.do")
+    public String modifyInfo2(User user){
+    	String loginName = UserUtils.getCurrentLoginName();
+    	User user2 = userService.getUserByEmail(loginName);
+    	user2.setUsername(user.getUsername());
+    	user2.setEmail(user.getEmail());
+    	userService.saveOne(user2);
+
+    	return "redirect:/userController/tomodifyInfo2.do";
+    }
+    
     //to博客签名
 	 @RequestMapping("/toblogsign")
 	 public String toBlogSingn(ModelMap map){
@@ -218,7 +238,7 @@ public class UserController {
 		 map.put("sign", user.getDescription());
 		 return "author/post/blogsign.jsp";
 	 }
-	 
+	 //我关注的人
 	 @RequestMapping("/myfollowed")
 	 public String myfollowed(ModelMap map){
 		 String email = UserUtils.getCurrentLoginName();
@@ -239,6 +259,7 @@ public class UserController {
 		 return "author/me/myfollowed.jsp";
 	 }
 	 
+	 //我的粉丝
 	 @RequestMapping("/followedme")
 	 public String followedme(ModelMap map){
 		 String email = UserUtils.getCurrentLoginName();

@@ -27,6 +27,7 @@ import top.laijie.blogs.domain.Posts;
 import top.laijie.blogs.domain.User;
 import top.laijie.blogs.domain.dto.CommentsDto;
 import top.laijie.blogs.keyword.SensitivewordFilter;
+import top.laijie.blogs.mail.SendEmail;
 import top.laijie.blogs.service.CategorieService;
 import top.laijie.blogs.service.CommentService;
 import top.laijie.blogs.service.FollowService;
@@ -199,6 +200,17 @@ public class IndexPageController {
 			 ObjectId pid = new ObjectId(postId);
 			 comment.setPostId(pid);
 		 }
+		 {
+			 Posts post = postService.findByOBjId(comment.getPostId());
+			 User user = userService.findByOBjId(post.getUid());
+			 String subject = new String("【壹博客】您的文章《"+post.getTitle()+"》有新评论");
+			 StringBuffer buffer= new StringBuffer();
+			 buffer.append("<p>亲爱的"+user.getNicename()+":</p>");
+			 buffer.append("<p>您的博客<a href='http://www.laijie.top/"+user.getBlogaddress()+"'>"+user.getBlogname()+"</a>文章《"+post.getTitle()+"》有新评论:</p>");
+			 buffer.append("<p>"+content+"</p>");
+			 
+			 SendEmail.send(user.getEmail(),buffer.toString(),subject);
+	 	}
 		 comment.setCreateDate(new Date());
 		 comment.setStatus(1);
 		 String email = UserUtils.getCurrentLoginName();

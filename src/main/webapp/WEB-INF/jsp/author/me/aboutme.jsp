@@ -17,6 +17,53 @@
 	<div class="container">
 	<!-- 导航结束 -->
 	<div class="row clearfix from-top">
+					<nav class="navbar mynav navbar-fixed-top" role="navigation">
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="${ctx}/author/index">壹博客</a>
+				</div>
+				
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<form class="navbar-form navbar-left" role="search" style="display: none;">
+						<div class="form-group">
+							<input type="text" class="form-control" />
+						</div> <button type="submit" class="btn btn-default">Submit</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<%--  <sec:authentication property="name"></sec:authentication> --%>
+								<c:out value="${user.nicename}"></c:out>
+								 <strong class="caret"></strong>
+							 </a>
+							<ul class="dropdown-menu">
+								<li>
+									 <a href="${ctx}/userController/about_me.do">个人中心</a>
+								</li>
+								<!-- <li>
+									 <a href="#">账号设置</a>
+								</li>
+								<li>
+									 <a href="#">意见反馈</a>
+								</li> -->
+								<li class="divider">
+								</li>
+								<li>
+									 <a href="${ctx}/userController/logout.do">退出</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							 <a class="myblog" href="${ctx}/${user.blogaddress}">我的博客</a>
+						</li>
+						<li>
+							 &nbsp;&nbsp;&nbsp;&nbsp;
+							 &nbsp;&nbsp;&nbsp;&nbsp;
+						</li>
+					</ul>
+				</div>
+				
+			</nav>
 		<div class="col-md-2 column" style="background-color:#E9EFF3; height: 600px;">
 			<div style="text-align: center;">
 			    <input type="file" id="file" accept="image/*" name="file" multiple="multiple" style="display: none;" onchange="uploadImage();"/>
@@ -49,7 +96,7 @@
 		</div>
 		<div class="col-md-10 column mycontent" style="background-color: rgb(243, 246, 248);">
 			<div class="jumbotron well" 
-			style="background-color:#FFF;margin-left: 100px;margin-top: 50px;">
+			style="background-color:#FFF;margin-left: 50px;margin-top: 0px;">
 			
 					<div class="tabbable" id="tabs-547795">
 						<ul class="nav nav-tabs">
@@ -63,11 +110,11 @@
 								 <a id="followedme" href="#panel-l2" data-toggle="tab">我的粉丝</a>
 							</li>
 							<li>
-								 <a href="#panel-l2" data-toggle="tab">账户设置</a>
+								 <a id="passportSetting" href="#panel-l2" data-toggle="tab">账户设置</a>
 							</li>
-							<li >
+							<!-- <li >
 								 <a href="#panel-l2" data-toggle="tab">安全</a>
-							</li>
+							</li> -->
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="panel-l1">
@@ -99,9 +146,8 @@
 										<div class="form-group">
 											 <label for="title" class="control-label">个人签名:</label>
 											 <div>
-											 	<textarea class="form-control" id="description" name="description" type="text">
-											 	${user.description}
-											 	</textarea>
+											 	<input class="form-control" id="description" name="description" type="text" value="${user.description}" />
+											 	
 											 </div>
 										</div> 
 										<button type="submit" id="sub" class="btn btn-default">保存</button>
@@ -111,32 +157,6 @@
 							<div class="tab-pane" id="panel-l2">
 									<iframe id="menuFrame" name="menuFrame"  style="overflow:hidden;" 
 										scrolling="yes" frameborder="no" width="100%" height="100%"></iframe>
-							</div>
-							<div class="tab-pane" id="panel-l4">
-								<form role="form" method="post"
-									action="${ctx}/postsController/modifyPost.do">
-									<div class="form-group" style="display: none;">
-										<div>
-											<input name="_id" value="${post._id}" />
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="title" class="control-label">用户名:</label>
-										<div>
-											<input class="form-control" id="title" name="title" type="text"
-												value="${post.title}" />
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="title" class="control-label">邮箱名称:</label>
-										<div>
-											<input class="form-control" id="title" name="title" type="text"
-												value="${post.title}" />
-										</div>
-									</div>
-							
-									<button type="submit" id="sub" class="btn btn-default">保存</button>
-								</form>
 							</div>
 							<div class="tab-pane" id="panel-l5">
 								<p>
@@ -178,6 +198,10 @@
 		$("#followedme").click(function(){
 			$("#menuFrame").attr("src","${ctx}/userController/followedme");
 		})
+		
+		$("#passportSetting").click(function(){
+			$("#menuFrame").attr("src","${ctx}/userController/tomodifyInfo2.do");
+		});
  	});
  	function clickInput(){
 			$('#file').click();

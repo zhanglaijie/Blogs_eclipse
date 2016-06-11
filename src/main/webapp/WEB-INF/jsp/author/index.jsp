@@ -43,12 +43,12 @@
 								<li>
 									 <a href="${ctx}/userController/about_me.do">个人中心</a>
 								</li>
-								<li>
+								<!-- <li>
 									 <a href="#">账号设置</a>
 								</li>
 								<li>
 									 <a href="#">意见反馈</a>
-								</li>
+								</li> -->
 								<li class="divider">
 								</li>
 								<li>

@@ -2,6 +2,7 @@ package top.laijie.blogs.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -24,10 +25,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import top.laijie.blogs.domain.Categories;
+import top.laijie.blogs.domain.Follow;
 import top.laijie.blogs.domain.Posts;
 import top.laijie.blogs.domain.User;
+import top.laijie.blogs.domain.dto.FollowDto;
 import top.laijie.blogs.keyword.SensitivewordFilter;
+import top.laijie.blogs.mail.SendEmail;
 import top.laijie.blogs.service.CategorieService;
+import top.laijie.blogs.service.FollowService;
 import top.laijie.blogs.service.PostsService;
 import top.laijie.blogs.service.UserService;
 import top.laijie.blogs.service.impl.PostsServiceImpl;
@@ -49,7 +54,8 @@ public class PostsController {
 	 private PostsService postService;
 	 @Resource
 	 private UserServiceImpl userService;
-	 
+	 @Resource
+	 private FollowService followService;
 	 @Resource
 	 private CategorieService categorieService;
 	 
@@ -108,6 +114,21 @@ public class PostsController {
 		posts.setUid(user.get_id());
 		posts.setPostdate(new Date());
 		postService.createPost(posts);
+		if(posts.getStatus()==1){
+			 Query query = new Query();
+			 query.addCriteria(Criteria.where("authorUid").is(user.get_id()));  
+			 Page<Follow> followPage = followService.listFollow(1,1000,query);
+			 for(Follow follow:followPage.getDatas()){
+				 User user2 = userService.findByOBjId(follow.getFollowerUid());
+				 String subject = new String("【壹博客】"+user.getNicename()+"发博《"+posts.getTitle()+"》");
+				 StringBuffer buffer= new StringBuffer();
+				 buffer.append("<p>亲爱的"+user2.getNicename()+":</p>");
+				 buffer.append("<p>您关注的博客<a href='http://www.laijie.top/"+user.getBlogaddress()+"'>"+user.getBlogname()+"</a>有新文章《"+posts.getTitle()+"》更新,敬请查看</p>");
+				 buffer.append("<p>"+posts.getExcerpt()+"</p>");
+				 
+				 SendEmail.send(user2.getEmail(),buffer.toString(),subject);
+			 }
+		}
 		PrintWriter writer = null;
 		try {
 			postService.createPost(posts);
@@ -206,8 +227,7 @@ public class PostsController {
 			 return "redirect:/postsController/listPosts.do?pageNo="+pageNo; 
 		 }
 	 }
-	
-	 
+
 	 private String repalce(String string){
 		 SensitivewordFilter filter = new SensitivewordFilter();
 			return filter.replaceSensitiveWord(string,2,"*");

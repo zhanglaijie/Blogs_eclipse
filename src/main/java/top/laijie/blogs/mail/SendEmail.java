@@ -49,7 +49,12 @@ public class SendEmail {
           
         return session;  
     }  
-      
+   /**
+    * 
+    * @param toEmail 目的邮箱地址
+    * @param content 内容
+    * @param subject 标题 【壹博客】 "账号激活邮件"
+    */
     public static void send(String toEmail,String content,String subject) {  
         Session session = getSession();  
         try {  
