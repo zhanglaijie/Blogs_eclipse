@@ -10,4 +10,6 @@ public interface FollowService {
 	public void createFollow(Follow follow);
 	
 	Page<Follow> listFollow(int pageNo,Query query);
+
+	Follow find(Query query);
 }

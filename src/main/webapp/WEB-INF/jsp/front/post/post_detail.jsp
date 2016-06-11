@@ -39,10 +39,18 @@
 			<div class="col-md-12 column">
 				<h3><c:out value="${post.title}"></c:out> </h3>			
 				${post.content}
+				<div class="postDesc" style="color:#bcbcbc;">${sign}</div>
 				<div style="padding: 10px 0;margin-bottom: 10px;margin-top: 10px;
 				border: silver 1px dashed;font-size: 12px;width: 270px;text-align: center;">
 					<button type="button" class="btn btn-default btn-info">好文要顶</button>
-					<button onclick="followme('${post.uid}');" type="button" class="btn btn-default btn-danger">关注我</button>
+					<c:choose>
+						<c:when test="${followed== false}">
+							<button id="followme" onclick="followme('${post.uid}');" type="button" class="btn btn-default btn-danger">关注我</button>
+						</c:when>
+						<c:when test="${followed == true}">
+							<button  type="button" disabled="disabled" class="btn btn-default btn-danger">已关注</button>
+						</c:when>
+					</c:choose>
 					<button type="button" class="btn btn-default btn-warning">收藏该文</button>
 				</div>
 				<div class="postDesc" style="color:#bcbcbc;">posted <fmt:formatDate value="${post.postdate}" pattern="yyyy-MM-dd HH:mm" /> 阅读(<c:out value="${post.read_count}"></c:out>) 评论(<c:out value="${post.comment_count}"></c:out>)  <!-- <a rel="nofollow">编辑</a> --></div>
@@ -102,7 +110,10 @@
 			data:{'authorId':authorId},
 			dataType: 'json',
 			success:function(msg){
-				alert(msg.status);
+				if(msg.status=="success"){
+					$("#followme").text("已关注");
+					$("#followme").attr("disabled", true); 
+				}else alert(msg.status);
 			}
 		});
 	}

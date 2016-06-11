@@ -23,6 +23,9 @@
 							博客名称
 						</th>
 						<th>
+							博客地址
+						</th>
+						<th>
 							邮件地址
 						</th>
 						<th>
@@ -44,6 +47,9 @@
 					<tr>
 						<td>
 							<c:out value="${user.blogname}"></c:out>
+						</td>
+						<td>
+							<a href="${ctx}/${user.blogaddress}" target="_black"><c:out value="${user.blogaddress}"></c:out></a>
 						</td>
 						<td>
 							<c:out value="${user.email}"></c:out>

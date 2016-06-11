@@ -111,10 +111,10 @@ import top.laijie.blogs.tool.ServiceException;
 	        user.setRegisterTime(new Date());  
 	        user.setStatus(0);  
 	        ///如果处于安全，可以将激活码处理的更复杂点，这里我稍做简单处理  
-		    user.setValidateCode(Des3.encode(user.getEmail()));
+		    user.setValidateCode(MD5Util.encode2hex(user.getEmail()));
 		    user.setPassword(MD5Util.encode2hex(user.getPassword()));
 	        //user.setValidateCode(MD5Util.encode2hex(user.getEmail()));   
-	        this.save(user);
+	     
 	        ///邮件的内容  
 	        StringBuffer sb=new StringBuffer("点击下面链接激活账号，48小时生效，否则重新注册账号，链接只能使用一次，请尽快激活！</br>");  
 	        sb.append("<a href=\"http://"+DOMIAN+"/user/register?action=activate&email=");  
@@ -129,7 +129,8 @@ import top.laijie.blogs.tool.ServiceException;
 	          
 	        //发送邮件  
 	        SendEmail.send(user.getEmail(), sb.toString(),"账号激活邮件");  
-	        System.out.println("发送邮件");  
+	        
+	        this.save(user);
 	          
 	    }  
 	    

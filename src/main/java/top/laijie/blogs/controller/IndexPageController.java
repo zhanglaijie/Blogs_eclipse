@@ -22,17 +22,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import top.laijie.blogs.domain.Categories;
 import top.laijie.blogs.domain.Comments;
+import top.laijie.blogs.domain.Follow;
 import top.laijie.blogs.domain.Posts;
 import top.laijie.blogs.domain.User;
 import top.laijie.blogs.domain.dto.CommentsDto;
 import top.laijie.blogs.keyword.SensitivewordFilter;
 import top.laijie.blogs.service.CategorieService;
 import top.laijie.blogs.service.CommentService;
+import top.laijie.blogs.service.FollowService;
 import top.laijie.blogs.service.PostsService;
 import top.laijie.blogs.service.impl.PostsServiceImpl;
 import top.laijie.blogs.service.impl.UserServiceImpl;
 import top.laijie.blogs.tool.DateUtils;
 import top.laijie.blogs.tool.Page;
+import top.laijie.blogs.tool.StaticProperties;
 import top.laijie.blogs.tool.UserUtils;
 /**
  * 匹配个人主页功能
@@ -56,13 +59,22 @@ public class IndexPageController {
 	 @Autowired
 	 private CommentService commentService;
 	 
+	 @Autowired
+	 private FollowService followService;
+	 
+	 //登陆后跳到个人主页
+	 @RequestMapping(value="/forback/{name}")
+	 public String forback(@PathVariable("name") String name,ModelMap map){
+		 return "redirect:/"+name;
+	 }
+	 
 	 //个人主页
-	 @RequestMapping(value="/{name}", method = {RequestMethod.GET})
-	public String getDetail(@PathVariable("name") String name,ModelMap map,HttpServletRequest request){
+	@RequestMapping(value="/{name}", method = {RequestMethod.GET})
+	public String getDetail(@PathVariable("name") String name,ModelMap map){
 		Query query = new Query();  
         query.addCriteria(Criteria.where("blogaddress").is(name));  
 	    User user = userService.findOne(query);
-	    if(user!=null){
+	    if(user!=null&&user.getStatus()==1){
 	 		//Query query2 = new Query();
 	 		 Query query2 = new Query(Criteria.where("uid").is(user.get_id()));
 	 		query2.with(new Sort(Sort.Direction.DESC, "postdate"));
@@ -71,13 +83,24 @@ public class IndexPageController {
 	 		 query3.addCriteria(Criteria.where("uid").is(user.get_id()));
 	 		 Page<Categories> catelist = categorieService.listCategories(1,100,query3);
 	 		 map.addAttribute("cateList",catelist.getDatas());
+	 		if(StringUtils.isBlank(user.getAlbum())){
+	    		user.setAlbum(StaticProperties.DEFAULT_ALBUM);
+	    	}
 	    	 map.addAttribute("user", user);
 	    	 String old = DateUtils.timeDifference(new Date(), user.getRegisterTime());
 	    	 map.put("old", old);
 	 	    return "/front/index.jsp";
-	    }else{
-	    	map.addAttribute("message", "该页面不存在");
-	    	return "/register/activate_failure.jsp";
+	    }else if(user!=null&&user.getStatus()==0){
+	    	map.addAttribute("message", "该用户尚未激活");
+	    	return "/error/error_page.jsp";
+	    }
+	    else if(user!=null&&user.getStatus()==2){
+	    	map.addAttribute("message", "该用户涉嫌违规，暂时关闭");
+	    	return "/error/error_page.jsp";
+	    }
+	    else{
+	    	map.addAttribute("message", "404-该页面不存在");
+	    	return "/error/error_page.jsp";
 	    }
 	 
 	}
@@ -117,7 +140,20 @@ public class IndexPageController {
 		 ObjectId _id = new ObjectId(id);
 	 	 postService.changereadNum(_id, true);
 	 	 Posts post = postService.findByOBjId(_id);
+	 	
+	 	 
+	 	 String email = UserUtils.getCurrentLoginName();
+	 	 User user = userService.getUserByEmail(email);
+	 	 Query query2 = new Query(Criteria.where("authorUid").is(post.getUid()));
+	 	 query2.addCriteria(Criteria.where("followerUid").is(user.get_id())); 
+	 	 Follow follow = followService.find(query2);
+	 	 if(follow!=null){
+	 		 map.put("followed", true);
+	 	 }else{
+	 		 map.put("followed", false);
+	 	 }
 	 	 map.put("post", post);
+	 	 map.put("sign", user.getDescription());
 		 return "/front/post/post_detail.jsp";
 	 }
 	 

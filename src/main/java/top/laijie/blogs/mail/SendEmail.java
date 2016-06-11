@@ -53,7 +53,7 @@ public class SendEmail {
     public static void send(String toEmail,String content,String subject) {  
         Session session = getSession();  
         try {  
-            System.out.println("--send--"+content);  
+            //System.out.println("--send--"+content);  
             // Instantiate a message  
             Message msg = new MimeMessage(session);  
             String nick="";  

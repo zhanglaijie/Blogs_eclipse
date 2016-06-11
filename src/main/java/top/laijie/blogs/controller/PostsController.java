@@ -66,7 +66,7 @@ public class PostsController {
 	 public String createPostNavigation(ModelMap map){
 		 User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
 		 Query query = new Query(Criteria.where("uid").is(user.get_id()));
-		 query.addCriteria(Criteria.where("visible").is(1));
+		 query.addCriteria(Criteria.where("visible").is(0));
 		 Page<Categories> categorie = categorieService.listCategories(1, query);
 		 map.addAttribute("categorie", categorie);
 		return "author/post/add_post.jsp";
@@ -83,6 +83,7 @@ public class PostsController {
 		ObjectId categorieId =null;
 		if(cateId!=null&&!cateId.equals("")){
 			 categorieId = new ObjectId(cateId);
+			 categorieService.updateCount(categorieId);
 		}
 		String excerpt = request.getParameter("excerpt");
 		String status = request.getParameter("status");
@@ -91,7 +92,7 @@ public class PostsController {
 		posts.setTitle(repalce(title));
 		posts.setContent(repalce(content));
 		posts.setCategorieId(categorieId);
-		categorieService.updateCount(categorieId);
+		
 		User user = userService.getUserByEmail(UserUtils.getCurrentLoginName());
 		if(excerpt!=null&&!excerpt.equals("")){
 			posts.setExcerpt(repalce(excerpt));
@@ -205,6 +206,7 @@ public class PostsController {
 			 return "redirect:/postsController/listPosts.do?pageNo="+pageNo; 
 		 }
 	 }
+	
 	 
 	 private String repalce(String string){
 		 SensitivewordFilter filter = new SensitivewordFilter();

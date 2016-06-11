@@ -88,16 +88,16 @@
 					<a href="${ctx}/postsController/listDrafts.do" target="menuFrame">草稿箱</a>
 				</div>
 				<div class="panel-body">
-					博客签名
+					<a href="${ctx}/userController/toblogsign" target="menuFrame">博客签名</a>
 				</div>
-				<div class="panel-body">
+				<!-- <div class="panel-body">
 					博客备份
 				</div>
 				<div class="panel-body">
 					博客搬家
-				</div>
+				</div> -->
 				<div class="panel-body">
-					<a class="categorie">编辑分类</a>
+					<a class="categorie">我的分类</a>
 				</div>
 			</div>
 	<!-- 导航结束 -->

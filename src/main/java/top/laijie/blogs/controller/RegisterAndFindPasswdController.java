@@ -33,7 +33,7 @@ public class RegisterAndFindPasswdController {
     @RequestMapping(value="/register",method={RequestMethod.GET,RequestMethod.POST})  
     public ModelAndView  register(HttpServletRequest request,HttpServletResponse response,User user) throws ParseException{  
         String action = request.getParameter("action");  
-        System.out.println("-----r----"+action);  
+      //  System.out.println("-----r----"+action);  
         ModelAndView mav=new ModelAndView();  
   
         if("register".equals(action)) {  

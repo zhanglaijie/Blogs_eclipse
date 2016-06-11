@@ -152,7 +152,7 @@ public class UserController {
     		user.setAlbum(StaticProperties.DEFAULT_ALBUM);
     	}
     	map.addAttribute("user",user);
-		return "/back/user/B_main.jsp";
+		return "/author/aboutme.jsp";
     }
     /**
      * 完善资料
@@ -190,4 +190,22 @@ public class UserController {
 
     	return "redirect:/userController/about_me.do";
     }
+    
+    //to博客签名
+	 @RequestMapping("/toblogsign")
+	 public String toBlogSingn(ModelMap map){
+		 String email = UserUtils.getCurrentLoginName();
+		 User user = userService.getUserByEmail(email);
+		 map.put("sign", user.getDescription());
+		 return "author/post/blogsign.jsp";
+	 }
+	 @RequestMapping("/editblogsign")
+	 public String editblogsign(ModelMap map,String description){
+		 String email = UserUtils.getCurrentLoginName();
+		 User user = userService.getUserByEmail(email);
+		 user.setDescription(description);
+		 userService.save(user);
+		 map.put("sign", user.getDescription());
+		 return "author/post/blogsign.jsp";
+	 }
 }  

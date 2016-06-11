@@ -40,17 +40,16 @@ public class User extends Basic implements Serializable{
      * 头像
      */
     private String album;
+    /**
+     * 个性说明
+     */
+    private String description;
     public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	/**
-     * 个性说明
-     */
-    private String description;
-    
 	public String getAlbum() {
 		return album;
 	}
@@ -125,6 +124,9 @@ public class User extends Basic implements Serializable{
 	public void setAuth(int auth) {
 		this.auth = auth;
 	}
+	
+	
+	
 	@Transient  
     public Date getLastActivateTime() {  
         Calendar cl = Calendar.getInstance();  
@@ -149,6 +151,27 @@ public class User extends Basic implements Serializable{
 				+ blogsubname + ", auth=" + auth + ", album=" + album
 				+ ", description=" + description + "]";
 	}
-	
-	
+	public User(String username, String password, String nicename, String email, int status, String validateCode,
+			Date registerTime, String blogname, String blogaddress, String blogsubname, int auth, String album,
+			String description) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nicename = nicename;
+		this.email = email;
+		this.status = status;
+		this.validateCode = validateCode;
+		this.registerTime = registerTime;
+		this.blogname = blogname;
+		this.blogaddress = blogaddress;
+		this.blogsubname = blogsubname;
+		this.auth = auth;
+		this.album = album;
+		this.description = description;
+	}
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }

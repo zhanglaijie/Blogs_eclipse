@@ -36,7 +36,7 @@
 								 <a href="${ctx}/postsController/createPostNavigation.do">新随笔</a>
 							</li>
 							<li>
-								 <a href="#">联系</a>
+								 <a href="${ctx}/forback/${user.blogaddress}">登陆</a>
 							</li>
 							<li>
 								 <a href="#">订阅</a>

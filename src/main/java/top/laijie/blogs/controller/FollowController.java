@@ -58,7 +58,7 @@ public class FollowController {
 					ObjectId authorUid = new ObjectId(aid);
 					fo.setAuthorUid(authorUid);
 					followService.createFollow(fo);
-					writer.write("{\"status\":\"关注成功~~~~\"}");
+					writer.write("{\"status\":\"success\"}");
 			 	 }
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
