@@ -156,20 +156,25 @@ public class IndexPageController {
 	
 	 	 
 	 	 String email = UserUtils.getCurrentLoginName();
-	 	 User user = userService.getUserByEmail(email);
-	 	 Query query2 = new Query(Criteria.where("authorUid").is(post.getUid()));
-	 	 query2.addCriteria(Criteria.where("followerUid").is(user.get_id())); 
-	 	
-	 	 Follow follow = followService.find(query2);
-	 	 if(post.getUid().equals(user.get_id())){
-		 		map.put("followed", "zero");
-		 }else if(follow!=null){
-	 		 map.put("followed", true);
+	 	 if(email.equals("anonymousUser")){
+	 		 map.put("followed", "false");
 	 	 }else{
-	 		 map.put("followed", false);
+	 		 User user = userService.getUserByEmail(email);
+		 	 Query query2 = new Query(Criteria.where("authorUid").is(post.getUid()));
+		 	 query2.addCriteria(Criteria.where("followerUid").is(user.get_id())); 
+		 	
+		 	 Follow follow = followService.find(query2);
+		 	 if(post.getUid().equals(user.get_id())){
+			 		map.put("followed", "zero");
+			 }else if(follow!=null){
+		 		 map.put("followed", true);
+		 	 }else{
+		 		 map.put("followed", false);
+		 	 }
 	 	 }
 	 	 map.put("post", post);
-	 	 map.put("sign", user.getDescription());
+	 	 User user2 = userService.findByOBjId(post.getUid());
+	 	 map.put("sign", user2.getDescription());
 		 return "/front/post/post_detail.jsp";
 	 }
 	 
