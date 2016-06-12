@@ -14,4 +14,6 @@ public interface FollowService {
 	Follow find(Query query);
 
 	public Page<Follow> listFollow(int i, int j, Query query);
+
+	Long CountNum(Query query);
 }

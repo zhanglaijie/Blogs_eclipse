@@ -36,4 +36,9 @@ public class FollowServiceImp extends BasicService<Follow> implements FollowServ
 	public Page<Follow> listFollow(int i, int j, Query query) {
 		return this.getPage(i, j, query);
 	}
+	
+	@Override
+	public Long CountNum(Query query){
+		return this.count(query);
+	}
 }

@@ -26,6 +26,7 @@ import top.laijie.blogs.domain.Follow;
 import top.laijie.blogs.domain.Posts;
 import top.laijie.blogs.domain.User;
 import top.laijie.blogs.domain.dto.CommentsDto;
+import top.laijie.blogs.domain.dto.FollowDto;
 import top.laijie.blogs.keyword.SensitivewordFilter;
 import top.laijie.blogs.mail.SendEmail;
 import top.laijie.blogs.service.CategorieService;
@@ -76,6 +77,16 @@ public class IndexPageController {
         query.addCriteria(Criteria.where("blogaddress").is(name));  
 	    User user = userService.findOne(query);
 	    if(user!=null&&user.getStatus()==1){
+	    	{
+				 Query query2 = new Query();
+				 query2.addCriteria(Criteria.where("followerUid").is(user.get_id()));  
+				 Long myfollowed = followService.CountNum(query2);
+				 Query query3 = new Query();
+				 query3.addCriteria(Criteria.where("authorUid").is(user.get_id()));  
+				 Long followmed = followService.CountNum(query3);
+				 map.addAttribute("myfollowed", myfollowed);
+				 map.addAttribute("followmed", followmed);
+		 	 }
 	 		//Query query2 = new Query();
 	 		 Query query2 = new Query(Criteria.where("uid").is(user.get_id()));
 	 		query2.with(new Sort(Sort.Direction.DESC, "postdate"));
@@ -89,6 +100,7 @@ public class IndexPageController {
 	    	}
 	    	 map.addAttribute("user", user);
 	    	 String old = DateUtils.timeDifference(new Date(), user.getRegisterTime());
+	    	 //园龄
 	    	 map.put("old", old);
 	 	    return "/front/index.jsp";
 	    }else if(user!=null&&user.getStatus()==0){
@@ -141,7 +153,7 @@ public class IndexPageController {
 		 ObjectId _id = new ObjectId(id);
 	 	 postService.changereadNum(_id, true);
 	 	 Posts post = postService.findByOBjId(_id);
-	 	
+	
 	 	 
 	 	 String email = UserUtils.getCurrentLoginName();
 	 	 User user = userService.getUserByEmail(email);

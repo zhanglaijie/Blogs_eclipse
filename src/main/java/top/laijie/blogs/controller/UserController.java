@@ -238,6 +238,8 @@ public class UserController {
 		 map.put("sign", user.getDescription());
 		 return "author/post/blogsign.jsp";
 	 }
+	 
+	 
 	 //我关注的人
 	 @RequestMapping("/myfollowed")
 	 public String myfollowed(ModelMap map){

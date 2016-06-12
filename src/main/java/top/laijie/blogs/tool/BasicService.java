@@ -157,5 +157,7 @@ public class BasicService<T> {
 		/**
 		 * 获取一条数据
 		 */
-		
+		public Long count(Query query){
+			return mongoTemplate.count(query, this.getEntityClass());
+		}
 }

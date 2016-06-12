@@ -65,8 +65,8 @@
 							<div class="panel-body" >
 								<p>昵称：<c:out value="${user.nicename}"/></p>
 								<p>园龄：<c:out value="${old}"></c:out></p>
-								<p>关注：0人</p>
-								<p>粉丝：2人</p>
+								<p>关注：<c:out value="${myfollowed}"></c:out>人</p>
+								<p>粉丝：<c:out value="${followmed}"></c:out>人</p>
 							</div>
 						</div>
 						<div class="panel panel-primary" style="top: 30px; position: relative;">
