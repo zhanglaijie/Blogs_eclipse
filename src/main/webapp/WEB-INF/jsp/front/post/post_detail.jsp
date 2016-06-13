@@ -44,9 +44,6 @@
 				border: silver 1px dashed;font-size: 12px;width: 270px;text-align: center;">
 					<button type="button" class="btn btn-default btn-info">好文要顶</button>
 					<c:choose>
-						<c:when test="${followed== 'zero'}">
-							
-						</c:when>
 						<c:when test="${followed== false}">
 							<button id="followme" onclick="followme('${post.uid}');" type="button" class="btn btn-default btn-danger">关注我</button>
 						</c:when>
