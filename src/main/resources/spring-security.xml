@@ -19,6 +19,13 @@
          <security:intercept-url pattern="/*" access="permitAll"/>  
         <security:intercept-url pattern="/userController/admin" access="hasRole('ROLE_ADMIN')"/>  
         <security:intercept-url pattern="/userController/common" access="hasRole('ROLE_USER')"/>  
+        <security:intercept-url pattern="/userController/about_me.do" access="hasRole('ROLE_USER')"/>  
+        <security:intercept-url pattern="/userController/account_settings.do" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/userController/followedme" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/userController/myfollowed" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/userController/editblogsign" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/userController/toblogsign" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/userController/modifyInfo2.do" access="hasRole('ROLE_USER')"/>
         
         <security:intercept-url pattern="/comment/tocreate" access="hasRole('ROLE_USER')"/>  
         
