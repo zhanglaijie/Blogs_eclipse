@@ -32,7 +32,7 @@ import top.laijie.blogs.tool.StaticProperties;
 import top.laijie.blogs.tool.UserUtils;
 
 @Controller  
-@RequestMapping("/modifyInfomodifyInfo") 
+@RequestMapping("/userController") 
 public class UserController {  
 	private static Logger logger = Logger.getLogger(UserController.class.getName());     
     @Autowired  
